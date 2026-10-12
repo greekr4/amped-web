@@ -1,0 +1,50 @@
+# 볼케이노 건틀릿 PlayerData — 격투가 poa 를 바탕으로 공격 기술을 전부 교체.
+base ../../../web/game/resource/player/style/kakutoum/player.poa
+
+# ---- 서서 약공격 C → CC → CCC : 화염 잽 → 화염 훅 → 폭염 어퍼 ----
+tech W_s   A SW firejab.sc
+tech W_ss  A -   firehook.sc  W_s  40 420
+tech W_sss A -   blazeupper.sc W_ss 40 420
+attack firejab  attack_s1.aoa hit_burn.sc 6  0.5 100 0.0 0.0 0.6 0.0
+attack firehook attack_s1.aoa hit_burn.sc 8  0.7 100 0.0 0.0 0.7 0.0
+attack blazeup  attack_s2.aoa hit_B4.sc   13 0.9 120 0.0 0.5 0.4 0.0
+script firejab.sc    firejab.sc
+script firehook.sc   firehook.sc
+script blazeupper.sc blazeupper.sc
+
+# ---- 서서 강공격 X → XX : 폭발 스트레이트 → 화염 돌진 ----
+tech W_b  B SW bakustraight.sc
+tech W_bb B -   blazerush.sc W_b 40 700
+attack bakupunch attack_s2.aoa hit_burn.sc    13 0.9 120 0.0 0.0 0.7 0.0 kickback1.sc
+attack bakuwave  attack_s2.aoa hit_explode.sc 9  0.6 150 0.0 0.0 0.9 0.0
+attack rush      attack_s2.aoa hit_B5.sc      12 0.8 250 0.0 0.0 0.7 0.0
+script bakustraight.sc bakustraight.sc
+script blazerush.sc    blazerush.sc
+
+# ---- 대시 C / X : 불꽃 어깨치기 / 파이어샷(발사체) ----
+tech D_s A R flameshoulder.sc
+tech D_b B R fireshot.sc
+attack flameshoulder attack_s2.aoa hit_burn.sc 10 0.8 150 0.0 0.0 0.6 0.0
+attack fireshot /attack/fireshot.aoa hit_burn.sc 14 0.6 400 0.0 0.1 0.6 0.0
+script flameshoulder.sc flameshoulder.sc
+script fireshot.sc      fireshot.sc
+
+# ---- 조준(Z 유지) + C / X / XC : 화염탄 / 빅 레이저 / 볼케이노 버스트 ----
+tech A_s A A fireball.sc
+tech A_b B A biglaser.sc
+tech A_x AB A volcanoburst.sc
+attack fireball /attack/fireshot.aoa hit_burn.sc    10 0.5 400 0.0 0.1 0.6 0.0
+attack biglaser /attack/biglaser.aoa hit_explode.sc 26 0.8 800 0.0 0.2 0.6 0.0
+attack burst1   attack_s2.aoa hit_explode.sc 18 0.9 200 0.0 0.0 0.6 0.0
+attack burst2   attack_s2.aoa hit_explode.sc 18 0.9 200 0.0 0.0 -0.6 180.0
+script fireball.sc     fireball.sc
+script biglaser.sc     biglaser.sc
+script volcanoburst.sc volcanoburst.sc
+
+# ---- 점프 C / X : 화염 낙하 킥 / 메테오(수류탄 궤적) ----
+tech J_s A F flamekick.sc
+tech J_b B F meteor.sc
+attack flamekick attack_s3.aoa hit_burn.sc 11 0.8 150 0.0 -0.1 0.6 0.0
+attack meteor /attack/hgrenade.aoa hit_explode.sc 20 0.7 800 0.0 0.0 0.3 0.0
+script flamekick.sc flamekick.sc
+script meteor.sc    meteor.sc

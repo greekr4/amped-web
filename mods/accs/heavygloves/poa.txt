@@ -1,0 +1,14 @@
+# 헤비 글러브 전용 PlayerData. 격투가(KAKUTOU_M) player.poa 를 바탕으로 기술 2개를 바꾼다.
+# 주의: 원본 1.0.12 에서 악세 playerdata 는 스타일 poa 를 "통째로 대체"한다(병합 아님). 그래서 base 가 필수.
+base ../../../web/game/resource/player/style/kakutoum/player.poa
+
+# 1) 서서 강공격(W_b) → 메가 스트레이트: 두 번 치는 묵직한 스트레이트. 뒤에 W_bb(keriage) 연계는 그대로.
+tech W_b B SWA megapunch.sc
+attack megapunch1 attack_s1.aoa hit_B2.sc 9 0.9 100 0.2 0.0 0.5 0.0
+attack megapunch2 attack_s2.aoa hit_B6.sc 16 1.0 120 0.0 0.0 0.7 0.0 kickback1.sc
+script megapunch.sc megapunch.sc
+
+# 2) 달리며 강공격(D_b) → 글러브 미사일: 전방으로 날아가는 충격파(/attack/hadou.aoa, 4 유닛 비행).
+tech D_b B R glovemissile.sc
+attack glovewave /attack/hadou.aoa hit_B5.sc 12 0.6 500 0.0 0.1 0.6 0.0
+script glovemissile.sc glovemissile.sc

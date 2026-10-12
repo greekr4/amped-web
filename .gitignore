@@ -1,0 +1,7 @@
+# web/game/ (게임 에셋·jar)은 비공개 저장소라 포함한다. 공개 전환 시 반드시 제외할 것(CyberStep 저작물)
+.build/
+.shots/
+server/target/
+web/probe/*.class
+node_modules/
+.vercel

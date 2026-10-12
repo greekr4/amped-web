@@ -1,0 +1,8 @@
+<!doctype html><html><body>
+<script src="https://cjrtnc.leaningtech.com/4.3/loader.js"></script>
+<script type="module">
+async function Java_Probe_nat(lib, f, s) { return "f=" + f.constructor.name + ":" + Array.from(f).join(",") + " s=" + s + " type=" + typeof s; }
+await cheerpjInit({ natives: { Java_Probe_nat }, status: "none" });
+const code = await cheerpjRunMain("Probe", "/app/probe");
+console.log("PROBE exit=" + code);
+</script></body></html>

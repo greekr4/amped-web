@@ -1,0 +1,992 @@
+{
+ "outputDirectory": "web",
+ "redirects": [
+  {
+   "source": "/game",
+   "destination": "/game/",
+   "permanent": true
+  },
+  {
+   "source": "/game/conf",
+   "destination": "/game/conf/",
+   "permanent": true
+  },
+  {
+   "source": "/game/fonts",
+   "destination": "/game/fonts/",
+   "permanent": true
+  },
+  {
+   "source": "/game/l10n",
+   "destination": "/game/l10n/",
+   "permanent": true
+  },
+  {
+   "source": "/game/l10n/ko",
+   "destination": "/game/l10n/ko/",
+   "permanent": true
+  },
+  {
+   "source": "/game/l10n/ko/resource",
+   "destination": "/game/l10n/ko/resource/",
+   "permanent": true
+  },
+  {
+   "source": "/game/l10n/ko/resource/component",
+   "destination": "/game/l10n/ko/resource/component/",
+   "permanent": true
+  },
+  {
+   "source": "/game/l10n/ko/resource/component/gaiden",
+   "destination": "/game/l10n/ko/resource/component/gaiden/",
+   "permanent": true
+  },
+  {
+   "source": "/game/l10n/ko/resource/component/gaiden/bafabon",
+   "destination": "/game/l10n/ko/resource/component/gaiden/bafabon/",
+   "permanent": true
+  },
+  {
+   "source": "/game/l10n/ko/resource/component/gaiden/bob",
+   "destination": "/game/l10n/ko/resource/component/gaiden/bob/",
+   "permanent": true
+  },
+  {
+   "source": "/game/l10n/ko/resource/component/gaiden/bobooi",
+   "destination": "/game/l10n/ko/resource/component/gaiden/bobooi/",
+   "permanent": true
+  },
+  {
+   "source": "/game/l10n/ko/resource/component/gaiden/bon",
+   "destination": "/game/l10n/ko/resource/component/gaiden/bon/",
+   "permanent": true
+  },
+  {
+   "source": "/game/l10n/ko/resource/component/gaiden/core",
+   "destination": "/game/l10n/ko/resource/component/gaiden/core/",
+   "permanent": true
+  },
+  {
+   "source": "/game/l10n/ko/resource/component/gaiden/dragon",
+   "destination": "/game/l10n/ko/resource/component/gaiden/dragon/",
+   "permanent": true
+  },
+  {
+   "source": "/game/l10n/ko/resource/component/gaiden/fabicro",
+   "destination": "/game/l10n/ko/resource/component/gaiden/fabicro/",
+   "permanent": true
+  },
+  {
+   "source": "/game/l10n/ko/resource/component/gaiden/fabicro3",
+   "destination": "/game/l10n/ko/resource/component/gaiden/fabicro3/",
+   "permanent": true
+  },
+  {
+   "source": "/game/l10n/ko/resource/component/gaiden/gori",
+   "destination": "/game/l10n/ko/resource/component/gaiden/gori/",
+   "permanent": true
+  },
+  {
+   "source": "/game/l10n/ko/resource/component/gaiden/greater",
+   "destination": "/game/l10n/ko/resource/component/gaiden/greater/",
+   "permanent": true
+  },
+  {
+   "source": "/game/l10n/ko/resource/component/gaiden/linda",
+   "destination": "/game/l10n/ko/resource/component/gaiden/linda/",
+   "permanent": true
+  },
+  {
+   "source": "/game/l10n/ko/resource/component/gaiden/mike",
+   "destination": "/game/l10n/ko/resource/component/gaiden/mike/",
+   "permanent": true
+  },
+  {
+   "source": "/game/l10n/ko/resource/component/gaiden/noboru",
+   "destination": "/game/l10n/ko/resource/component/gaiden/noboru/",
+   "permanent": true
+  },
+  {
+   "source": "/game/l10n/ko/resource/component/gaiden/omusa",
+   "destination": "/game/l10n/ko/resource/component/gaiden/omusa/",
+   "permanent": true
+  },
+  {
+   "source": "/game/l10n/ko/resource/component/gaiden/taisa",
+   "destination": "/game/l10n/ko/resource/component/gaiden/taisa/",
+   "permanent": true
+  },
+  {
+   "source": "/game/l10n/ko/resource/component/menu",
+   "destination": "/game/l10n/ko/resource/component/menu/",
+   "permanent": true
+  },
+  {
+   "source": "/game/l10n/ko/resource/component/rank",
+   "destination": "/game/l10n/ko/resource/component/rank/",
+   "permanent": true
+  },
+  {
+   "source": "/game/l10n/ko/resource/rule",
+   "destination": "/game/l10n/ko/resource/rule/",
+   "permanent": true
+  },
+  {
+   "source": "/game/l10n/ko/resource/rule/ball1",
+   "destination": "/game/l10n/ko/resource/rule/ball1/",
+   "permanent": true
+  },
+  {
+   "source": "/game/l10n/ko/resource/rule/baske",
+   "destination": "/game/l10n/ko/resource/rule/baske/",
+   "permanent": true
+  },
+  {
+   "source": "/game/l10n/ko/resource/rule/battle",
+   "destination": "/game/l10n/ko/resource/rule/battle/",
+   "permanent": true
+  },
+  {
+   "source": "/game/l10n/ko/resource/rule/challenge",
+   "destination": "/game/l10n/ko/resource/rule/challenge/",
+   "permanent": true
+  },
+  {
+   "source": "/game/l10n/ko/resource/rule/dogfight",
+   "destination": "/game/l10n/ko/resource/rule/dogfight/",
+   "permanent": true
+  },
+  {
+   "source": "/game/l10n/ko/resource/rule/duel",
+   "destination": "/game/l10n/ko/resource/rule/duel/",
+   "permanent": true
+  },
+  {
+   "source": "/game/l10n/ko/resource/rule/flag1",
+   "destination": "/game/l10n/ko/resource/rule/flag1/",
+   "permanent": true
+  },
+  {
+   "source": "/game/l10n/ko/resource/rule/singleplay",
+   "destination": "/game/l10n/ko/resource/rule/singleplay/",
+   "permanent": true
+  },
+  {
+   "source": "/game/l10n/ko/resource/rule/soccer",
+   "destination": "/game/l10n/ko/resource/rule/soccer/",
+   "permanent": true
+  },
+  {
+   "source": "/game/l10n/ko/resource/rule/teamdog",
+   "destination": "/game/l10n/ko/resource/rule/teamdog/",
+   "permanent": true
+  },
+  {
+   "source": "/game/l10n/ko/resource/rule/volley",
+   "destination": "/game/l10n/ko/resource/rule/volley/",
+   "permanent": true
+  },
+  {
+   "source": "/game/music",
+   "destination": "/game/music/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource",
+   "destination": "/game/resource/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/accs",
+   "destination": "/game/resource/accs/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/accs/obj",
+   "destination": "/game/resource/accs/obj/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/area",
+   "destination": "/game/resource/area/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/attack",
+   "destination": "/game/resource/attack/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/component",
+   "destination": "/game/resource/component/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/component/battle",
+   "destination": "/game/resource/component/battle/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/component/gaiden",
+   "destination": "/game/resource/component/gaiden/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/component/gaiden/bafabon",
+   "destination": "/game/resource/component/gaiden/bafabon/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/component/gaiden/bob",
+   "destination": "/game/resource/component/gaiden/bob/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/component/gaiden/bobooi",
+   "destination": "/game/resource/component/gaiden/bobooi/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/component/gaiden/bon",
+   "destination": "/game/resource/component/gaiden/bon/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/component/gaiden/core",
+   "destination": "/game/resource/component/gaiden/core/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/component/gaiden/dragon",
+   "destination": "/game/resource/component/gaiden/dragon/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/component/gaiden/fabicro",
+   "destination": "/game/resource/component/gaiden/fabicro/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/component/gaiden/fabicro3",
+   "destination": "/game/resource/component/gaiden/fabicro3/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/component/gaiden/gori",
+   "destination": "/game/resource/component/gaiden/gori/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/component/gaiden/greater",
+   "destination": "/game/resource/component/gaiden/greater/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/component/gaiden/linda",
+   "destination": "/game/resource/component/gaiden/linda/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/component/gaiden/mike",
+   "destination": "/game/resource/component/gaiden/mike/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/component/gaiden/noboru",
+   "destination": "/game/resource/component/gaiden/noboru/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/component/gaiden/npc",
+   "destination": "/game/resource/component/gaiden/npc/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/component/gaiden/omusa",
+   "destination": "/game/resource/component/gaiden/omusa/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/component/gaiden/taisa",
+   "destination": "/game/resource/component/gaiden/taisa/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/component/menu",
+   "destination": "/game/resource/component/menu/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/component/rank",
+   "destination": "/game/resource/component/rank/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/component/status",
+   "destination": "/game/resource/component/status/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/effect",
+   "destination": "/game/resource/effect/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/effect/hit",
+   "destination": "/game/resource/effect/hit/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/face",
+   "destination": "/game/resource/face/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/face/bm_tex",
+   "destination": "/game/resource/face/bm_tex/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/face/bw_tex",
+   "destination": "/game/resource/face/bw_tex/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/face/eye",
+   "destination": "/game/resource/face/eye/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/face/face_icon",
+   "destination": "/game/resource/face/face_icon/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/face/mouth",
+   "destination": "/game/resource/face/mouth/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/face/nose",
+   "destination": "/game/resource/face/nose/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/face/wm_tex",
+   "destination": "/game/resource/face/wm_tex/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/face/ww_tex",
+   "destination": "/game/resource/face/ww_tex/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/face/ym_tex",
+   "destination": "/game/resource/face/ym_tex/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/face/yw_tex",
+   "destination": "/game/resource/face/yw_tex/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/images",
+   "destination": "/game/resource/images/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/item",
+   "destination": "/game/resource/item/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/map",
+   "destination": "/game/resource/map/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/mpv",
+   "destination": "/game/resource/mpv/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/player",
+   "destination": "/game/resource/player/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/player/action",
+   "destination": "/game/resource/player/action/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/player/anime",
+   "destination": "/game/resource/player/anime/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/player/body",
+   "destination": "/game/resource/player/body/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/player/body/1",
+   "destination": "/game/resource/player/body/1/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/player/body/2",
+   "destination": "/game/resource/player/body/2/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/player/body/3",
+   "destination": "/game/resource/player/body/3/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/player/body/4",
+   "destination": "/game/resource/player/body/4/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/player/body/5",
+   "destination": "/game/resource/player/body/5/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/player/body/6",
+   "destination": "/game/resource/player/body/6/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/player/body/7",
+   "destination": "/game/resource/player/body/7/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/player/body/8",
+   "destination": "/game/resource/player/body/8/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/player/body/9",
+   "destination": "/game/resource/player/body/9/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/player/body/a",
+   "destination": "/game/resource/player/body/a/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/player/body/b",
+   "destination": "/game/resource/player/body/b/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/player/body/c",
+   "destination": "/game/resource/player/body/c/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/player/body/h",
+   "destination": "/game/resource/player/body/h/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/player/common",
+   "destination": "/game/resource/player/common/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/player/dekachara",
+   "destination": "/game/resource/player/dekachara/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/player/face",
+   "destination": "/game/resource/player/face/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/player/face/1",
+   "destination": "/game/resource/player/face/1/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/player/face/2",
+   "destination": "/game/resource/player/face/2/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/player/npc",
+   "destination": "/game/resource/player/npc/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/player/npc/body",
+   "destination": "/game/resource/player/npc/body/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/player/npc/face",
+   "destination": "/game/resource/player/npc/face/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/player/special",
+   "destination": "/game/resource/player/special/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/player/style",
+   "destination": "/game/resource/player/style/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/player/style/armorw",
+   "destination": "/game/resource/player/style/armorw/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/player/style/armorw/body",
+   "destination": "/game/resource/player/style/armorw/body/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/player/style/armorw/face",
+   "destination": "/game/resource/player/style/armorw/face/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/player/style/armorw/head",
+   "destination": "/game/resource/player/style/armorw/head/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/player/style/armory",
+   "destination": "/game/resource/player/style/armory/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/player/style/armory/body",
+   "destination": "/game/resource/player/style/armory/body/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/player/style/armory/face",
+   "destination": "/game/resource/player/style/armory/face/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/player/style/armory/head",
+   "destination": "/game/resource/player/style/armory/head/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/player/style/armyb",
+   "destination": "/game/resource/player/style/armyb/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/player/style/armyb/body",
+   "destination": "/game/resource/player/style/armyb/body/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/player/style/armyb/face",
+   "destination": "/game/resource/player/style/armyb/face/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/player/style/armyb/head",
+   "destination": "/game/resource/player/style/armyb/head/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/player/style/armyw",
+   "destination": "/game/resource/player/style/armyw/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/player/style/armyw/body",
+   "destination": "/game/resource/player/style/armyw/body/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/player/style/armyw/face",
+   "destination": "/game/resource/player/style/armyw/face/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/player/style/armyw/head",
+   "destination": "/game/resource/player/style/armyw/head/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/player/style/esperw",
+   "destination": "/game/resource/player/style/esperw/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/player/style/esperw/body",
+   "destination": "/game/resource/player/style/esperw/body/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/player/style/esperw/face",
+   "destination": "/game/resource/player/style/esperw/face/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/player/style/esperw/head",
+   "destination": "/game/resource/player/style/esperw/head/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/player/style/espery",
+   "destination": "/game/resource/player/style/espery/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/player/style/espery/body",
+   "destination": "/game/resource/player/style/espery/body/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/player/style/espery/face",
+   "destination": "/game/resource/player/style/espery/face/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/player/style/espery/head",
+   "destination": "/game/resource/player/style/espery/head/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/player/style/kakutouf",
+   "destination": "/game/resource/player/style/kakutouf/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/player/style/kakutouf/body",
+   "destination": "/game/resource/player/style/kakutouf/body/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/player/style/kakutouf/face",
+   "destination": "/game/resource/player/style/kakutouf/face/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/player/style/kakutouf/head",
+   "destination": "/game/resource/player/style/kakutouf/head/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/player/style/kakutoum",
+   "destination": "/game/resource/player/style/kakutoum/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/player/style/kakutoum/body",
+   "destination": "/game/resource/player/style/kakutoum/body/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/player/style/kakutoum/face",
+   "destination": "/game/resource/player/style/kakutoum/face/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/player/style/kakutoum/head",
+   "destination": "/game/resource/player/style/kakutoum/head/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/player/style/spyb",
+   "destination": "/game/resource/player/style/spyb/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/player/style/spyb/body",
+   "destination": "/game/resource/player/style/spyb/body/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/player/style/spyb/face",
+   "destination": "/game/resource/player/style/spyb/face/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/player/style/spyb/head",
+   "destination": "/game/resource/player/style/spyb/head/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/player/style/spyw",
+   "destination": "/game/resource/player/style/spyw/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/player/style/spyw/body",
+   "destination": "/game/resource/player/style/spyw/body/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/player/style/spyw/face",
+   "destination": "/game/resource/player/style/spyw/face/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/player/style/spyw/head",
+   "destination": "/game/resource/player/style/spyw/head/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/player/style/supermanb",
+   "destination": "/game/resource/player/style/supermanb/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/player/style/supermanb/body",
+   "destination": "/game/resource/player/style/supermanb/body/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/player/style/supermanb/face",
+   "destination": "/game/resource/player/style/supermanb/face/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/player/style/supermanb/head",
+   "destination": "/game/resource/player/style/supermanb/head/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/player/style/supermany",
+   "destination": "/game/resource/player/style/supermany/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/player/style/supermany/body",
+   "destination": "/game/resource/player/style/supermany/body/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/player/style/supermany/face",
+   "destination": "/game/resource/player/style/supermany/face/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/player/style/supermany/head",
+   "destination": "/game/resource/player/style/supermany/head/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/preview",
+   "destination": "/game/resource/preview/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/preview/city",
+   "destination": "/game/resource/preview/city/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/preview/colosseum",
+   "destination": "/game/resource/preview/colosseum/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/preview/factory",
+   "destination": "/game/resource/preview/factory/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/preview/iseki",
+   "destination": "/game/resource/preview/iseki/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/preview/jungle",
+   "destination": "/game/resource/preview/jungle/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/preview/shrine",
+   "destination": "/game/resource/preview/shrine/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/preview/spacearena",
+   "destination": "/game/resource/preview/spacearena/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/preview/stage1",
+   "destination": "/game/resource/preview/stage1/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/preview/stage2",
+   "destination": "/game/resource/preview/stage2/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/preview/street",
+   "destination": "/game/resource/preview/street/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/preview/temple",
+   "destination": "/game/resource/preview/temple/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/rule",
+   "destination": "/game/resource/rule/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/rule/ball1",
+   "destination": "/game/resource/rule/ball1/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/rule/baske",
+   "destination": "/game/resource/rule/baske/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/rule/battle",
+   "destination": "/game/resource/rule/battle/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/rule/challenge",
+   "destination": "/game/resource/rule/challenge/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/rule/dogfight",
+   "destination": "/game/resource/rule/dogfight/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/rule/duel",
+   "destination": "/game/resource/rule/duel/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/rule/flag1",
+   "destination": "/game/resource/rule/flag1/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/rule/singleplay",
+   "destination": "/game/resource/rule/singleplay/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/rule/soccer",
+   "destination": "/game/resource/rule/soccer/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/rule/teamdog",
+   "destination": "/game/resource/rule/teamdog/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/rule/volley",
+   "destination": "/game/resource/rule/volley/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/script",
+   "destination": "/game/resource/script/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/skin",
+   "destination": "/game/resource/skin/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/sound",
+   "destination": "/game/resource/sound/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/tour",
+   "destination": "/game/resource/tour/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/tour/amped challenge",
+   "destination": "/game/resource/tour/amped challenge/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/tour/amped championship",
+   "destination": "/game/resource/tour/amped championship/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/tour/amped deathmatch",
+   "destination": "/game/resource/tour/amped deathmatch/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/tour/amped dogfight",
+   "destination": "/game/resource/tour/amped dogfight/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/tour/amped duel",
+   "destination": "/game/resource/tour/amped duel/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/tour/amped worldcup",
+   "destination": "/game/resource/tour/amped worldcup/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/tour/new challenge",
+   "destination": "/game/resource/tour/new challenge/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/tour/team championship",
+   "destination": "/game/resource/tour/team championship/",
+   "permanent": true
+  },
+  {
+   "source": "/game/resource/tour/team dogfight",
+   "destination": "/game/resource/tour/team dogfight/",
+   "permanent": true
+  }
+ ],
+ "rewrites": [
+  {
+   "source": "/game/:path*/",
+   "destination": "/game/:path*/index.list"
+  }
+ ],
+ "headers": [
+  {
+   "source": "/game/(.*)",
+   "headers": [
+    {
+     "key": "Cache-Control",
+     "value": "public, max-age=3600"
+    }
+   ]
+  }
+ ]
+}

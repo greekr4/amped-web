@@ -1,0 +1,12 @@
+/server/
+/.build/
+/.shots/
+/tools/
+/mods/
+/patch/
+/game-overrides/
+/l10n/
+/assets/
+/docs/
+/node_modules/
+/*.md

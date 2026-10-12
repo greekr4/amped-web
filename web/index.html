@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>GetAmped Web</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="description" content="싱글 겟앰프드 웹버전">
+<meta name="theme-color" content="#222222">
+<link rel="manifest" href="./manifest.json">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="GetAmped">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="GetAmped Web">
+<meta property="og:title" content="GetAmped Web">
+<meta property="og:description" content="싱글 겟앰프드 웹버전">
+<meta property="og:url" content="https://amped-web.vercel.app/">
+<meta property="og:image" content="https://amped-web.vercel.app/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="ko_KR">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="GetAmped Web">
+<meta name="twitter:description" content="싱글 겟앰프드 웹버전">
+<meta name="twitter:image" content="https://amped-web.vercel.app/og.png">
+<link rel="icon" href="./favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="./favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="./favicon-16.png">
+<link rel="apple-touch-icon" href="./apple-touch-icon.png">
+<style>
+  html, body { margin: 0; height: 100%; background: #111; color: #ddd; font: 13px/1.4 system-ui, sans-serif; }
+  /* 모바일: 글자 선택·길게 누름 메뉴·탭 하이라이트·바운스 스크롤 전부 차단 */
+  * { user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; -webkit-tap-highlight-color: transparent; }
+  html { overflow: hidden; overscroll-behavior: none; }
+  #log { user-select: text; -webkit-user-select: text; }
+  body { height: 100dvh; touch-action: manipulation; overscroll-behavior: none; position: fixed; width: 100%; } /* 더블탭 확대·당겨서 새로고침 차단 */
+  #stage, #stage canvas { touch-action: none; }
+  #wrap { display: flex; flex-direction: column; height: 100%; }
+  #bar { display: flex; gap: 10px; align-items: center; padding: 6px 10px; padding-top: calc(6px + env(safe-area-inset-top)); padding-left: calc(10px + env(safe-area-inset-left)); padding-right: calc(10px + env(safe-area-inset-right)); background: #1b1b1b; border-bottom: 1px solid #333; flex: 0 0 auto; white-space: nowrap; overflow: hidden; }
+  #bar b { flex: 0 0 auto; } #status { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+  #bar button { flex: 0 0 auto; }
+  #gh { display: inline-flex; align-items: center; color: #ddd; flex: 0 0 auto; padding: 2px; } #gh:hover { color: #fff; }
+  @media (max-width: 480px) {
+    #bar { gap: 6px; padding-left: calc(8px + env(safe-area-inset-left)); padding-right: calc(8px + env(safe-area-inset-right)); overflow-x: auto; scrollbar-width: none; }
+    #bar::-webkit-scrollbar { display: none; }
+    #bar b { font-size: 13px; } #status { display: none; }
+    #bar button { font-size: 12px; padding: 3px 7px; }
+  }
+  #stage { flex: 1; display: flex; align-items: center; justify-content: center; background: #000; overflow: hidden; }
+  #stage { position: relative; }
+  #loading { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; background: #000; color: #ddd; text-align: center; padding: 20px; z-index: 5; }
+  #loading.hide { display: none; }
+  #loading .spin { width: 44px; height: 44px; border: 4px solid #333; border-top-color: #4a7bd0; border-radius: 50%; animation: spin 0.9s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  #loading .detail { font-size: 13px; color: #9a9a9a; font-variant-numeric: tabular-nums; }
+  #loading .bar { width: min(320px, 80%); height: 6px; background: #222; border-radius: 3px; overflow: hidden; }
+  #loading .bar i { display: block; height: 100%; width: 0; background: #4a7bd0; transition: width .3s; }
+  /* 가상 패드 (터치 기기 또는 ?pad=1) */
+  #pad { display: none; flex: 0 0 auto; padding: 10px 14px calc(16px + env(safe-area-inset-bottom)); background: #0d0d0d; border-top: 1px solid #333; user-select: none; -webkit-user-select: none; touch-action: none; }
+  body.pad #pad { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+  #dpad { display: grid; gap: 4px; }
+  #dpad .k { grid-column: var(--c); grid-row: var(--r); }
+  #btns { display: grid; grid-template-columns: repeat(4, 44px); grid-template-rows: 60px; gap: 6px; } /* 세로: 한 줄 */
+  #dpad { grid-template-columns: repeat(3, 44px); grid-template-rows: repeat(3, 44px); }
+  .k { display: flex; flex-direction: column; align-items: center; justify-content: center; border-radius: 10px; background: #2a2a2a; color: #eee; border: 1px solid #444; font: 600 17px/1 system-ui, sans-serif; touch-action: none; }
+  .k small { font-size: 9px; color: #9a9a9a; margin-top: 4px; font-weight: 400; white-space: nowrap; }
+  .k.on { background: #4a7bd0; border-color: #6c9af0; }
+  #btns .k[data-key="v"] { background: #3a3a2a; } #btns .k[data-key="x"] { background: #3a2a2a; }
+  @media (orientation: landscape) and (max-height: 600px) {
+    body.pad #pad { position: fixed; left: 0; right: 0; bottom: 0; padding: 0 12px 12px; background: transparent; border: 0; pointer-events: none; }
+    body.pad #pad .k { pointer-events: auto; opacity: 0.72; backdrop-filter: blur(2px); }
+    #dpad { grid-template-columns: repeat(3, 48px); grid-template-rows: repeat(3, 48px); }
+    #btns { grid-template-columns: repeat(4, 48px); grid-template-rows: 56px; gap: 6px; } /* 가로도 한 줄 */
+  }
+  canvas { image-rendering: pixelated; outline: none; }
+  #log { max-height: 160px; overflow: auto; font: 11px/1.3 ui-monospace, monospace; background: #0b0b0b; color: #9c9; padding: 4px 8px; white-space: pre-wrap; }
+  #log .err { color: #f88; }
+  select, button { background: #333; color: #eee; border: 1px solid #555; padding: 3px 10px; border-radius: 4px; cursor: pointer; }
+</style>
+<!-- Vercel Web Analytics (대시보드에서 켠 뒤 이 스크립트만 있으면 페이지뷰 수집) -->
+<script defer src="/_vercel/insights/script.js"></script>
+<script src="https://cjrtnc.leaningtech.com/4.3/loader.js"></script>
+</head>
+<body>
+<div id="wrap">
+  <div id="bar"><b>GetAmped Web</b> <span id="status">초기화 중…</span> <button id="lang" title="언어 전환">한국어</button> <button id="fullscreen" style="display:none">전체화면</button> <button id="togglePad">패드</button> <button id="toggleLog">로그</button> <a id="gh" href="https://github.com/greekr4/amped-web" target="_blank" rel="noopener" title="GitHub 저장소" aria-label="GitHub"><svg viewBox="0 0 16 16" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg></a></div>
+  <div id="stage"><div id="loading"><div class="spin"></div><div class="bar"><i></i></div><div class="detail">&nbsp;</div></div></div>
+  <div id="pad">
+    <div id="btns">
+      <div class="k" data-key="z">Z<small>조준</small></div>
+      <div class="k" data-key="x">X<small>강공격</small></div>
+      <div class="k" data-key="c">C<small>약공격</small></div>
+      <div class="k" data-key="v">V<small>점프</small></div>
+    </div>
+    <div id="dpad">
+      <div class="k" data-key="ArrowUp" style="--c:2;--r:1">▲</div>
+      <div class="k" data-key="ArrowLeft" style="--c:1;--r:2">◀</div>
+      <div class="k" data-key="ArrowRight" style="--c:3;--r:2">▶</div>
+      <div class="k" data-key="ArrowDown" style="--c:2;--r:3">▼</div>
+    </div>
+  </div>
+  <div id="log" style="display:none"></div>
+</div>
+<script type="module">
+import { createRuntime } from './runtime.js';
+const logEl = document.getElementById('log'), statusEl = document.getElementById('status');
+document.getElementById('toggleLog').onclick = () => { logEl.style.display = logEl.style.display === 'none' ? '' : 'none'; };
+function logLine(s, cls) { const d = document.createElement('div'); if (cls) d.className = cls; d.textContent = s; logEl.appendChild(d); logEl.scrollTop = logEl.scrollHeight; if (logEl.childElementCount > 400) logEl.removeChild(logEl.firstChild); }
+// Java System.out/err 는 console.log 로 나온다 → 화면에도 비춘다
+for (const k of ['log', 'error', 'warn']) { const o = console[k].bind(console); console[k] = (...a) => { o(...a); try { const t = a.map(x => typeof x === 'string' ? x : JSON.stringify(x)).join(' ').trimEnd(); if (t) logLine(t, k === 'log' ? '' : 'err'); } catch {} }; }
+
+// ---- 로딩 표시: 단계 + 받은 파일 수/용량 (CheerpJ 가 fetch/XHR 로 받는 것을 가로채 집계) ----
+const loadingEl = document.getElementById('loading');
+const loadDetail = loadingEl.querySelector('.detail'), loadBar = loadingEl.querySelector('.bar i');
+let dlBytes = 0, phaseNo = 0; const dlSeen = new Set();
+function setPhase(n) { phaseNo = n; loadBar.style.width = (n * 30) + '%'; }
+function noteDownload(url, bytes) { if (!/cjrtnc|\/game\//.test(url)) return; dlSeen.add(url.split('?')[0]); dlBytes += bytes || 0; loadDetail.textContent = `파일 ${dlSeen.size.toLocaleString()}개 · ${(dlBytes / 1048576).toFixed(1)} MB 받음`; loadBar.style.width = Math.min(95, phaseNo * 30 + Math.min(30, dlBytes / 2e6)) + '%'; }
+const _fetch = window.fetch; window.fetch = async function (input, init) { const r = await _fetch.call(this, input, init); try { const u = typeof input === 'string' ? input : input.url; if (r.ok) noteDownload(u, +r.headers.get('content-length') || 0); } catch {} return r; }; // 206(Range) 응답도 content-length = 받은 조각 크기
+const _open = XMLHttpRequest.prototype.open; XMLHttpRequest.prototype.open = function (m, u) { this.addEventListener('loadend', () => { try { if (this.status >= 200 && this.status < 300) noteDownload(String(u), +this.getResponseHeader('content-length') || 0); } catch {} }); return _open.apply(this, arguments); };
+new MutationObserver(() => { if (document.getElementById('game')) { keepAwake(); loadBar.style.width = '100%'; setTimeout(() => loadingEl.classList.add('hide'), 400); } }).observe(document.getElementById('stage'), { childList: true });
+setPhase(0);
+const params = new URLSearchParams(location.search);
+const lang = params.get('lang') || ((navigator.language || '').toLowerCase().startsWith('ko') ? 'ko' : 'ja');
+// 언어 전환은 select 대신 버튼: iOS 사파리가 16px 미만 폼 컨트롤을 탭하면 강제 확대하기 때문 (user-scalable=no 무시)
+const langBtn = document.getElementById('lang'); const LANGS = { ko: '한국어', ja: '日本語' }; langBtn.textContent = LANGS[lang] || lang;
+langBtn.onclick = () => { params.set('lang', lang === 'ko' ? 'ja' : 'ko'); location.search = params.toString(); };
+const rt = createRuntime(document.getElementById('stage'), statusEl); window.amped = rt;
+// ---- 가상 패드: 터치 기기(coarse pointer)나 ?pad=1 이면 표시, 상단 "패드" 버튼으로 토글 ----
+const KEYS = { ArrowUp: [38, 0xFFFF], ArrowDown: [40, 0xFFFF], ArrowLeft: [37, 0xFFFF], ArrowRight: [39, 0xFFFF], z: [90, 122], x: [88, 120], c: [67, 99], v: [86, 118] };
+const padOn = params.get('pad') === '1' || (params.get('pad') !== '0' && matchMedia('(pointer: coarse)').matches);
+document.body.classList.toggle('pad', padOn);
+document.getElementById('togglePad').onclick = () => { document.body.classList.toggle('pad'); window.dispatchEvent(new Event('resize')); };
+const held = new Map(); // pointerId → 키 이름
+function padDown(id, name) { if (held.get(id) === name) return; padUp(id); held.set(id, name); const [code, ch] = KEYS[name]; rt.key(code, ch, true); document.querySelector(`.k[data-key="${name}"]`)?.classList.add('on'); }
+function padUp(id) { const name = held.get(id); if (!name) return; held.delete(id); if (![...held.values()].includes(name)) { const [code, ch] = KEYS[name]; rt.key(code, ch, false); document.querySelector(`.k[data-key="${name}"]`)?.classList.remove('on'); } }
+const pad = document.getElementById('pad');
+for (const el of [pad, document.getElementById('stage')]) for (const ev of ['touchstart', 'touchend', 'touchmove']) el.addEventListener(ev, e => e.preventDefault(), { passive: false });
+pad.addEventListener('pointerdown', e => { const k = e.target.closest('.k'); if (!k) return; e.preventDefault(); padDown(e.pointerId, k.dataset.key); });
+// 십자키 위에서 손가락을 미끄러뜨리면 방향 전환 (대시용 두 번 탭도 그대로 됨)
+pad.addEventListener('pointermove', e => { if (!held.has(e.pointerId)) return; const el = document.elementFromPoint(e.clientX, e.clientY)?.closest?.('#dpad .k'); if (el && el.dataset.key !== held.get(e.pointerId) && KEYS[held.get(e.pointerId)][1] === 0xFFFF) padDown(e.pointerId, el.dataset.key); });
+for (const ev of ['pointerup', 'pointercancel']) pad.addEventListener(ev, e => padUp(e.pointerId));
+pad.addEventListener('contextmenu', e => e.preventDefault());
+window.addEventListener('blur', () => { for (const id of [...held.keys()]) padUp(id); });
+// ---- 확대 차단: iOS 사파리는 viewport 의 user-scalable=no 를 무시하므로 핀치 제스처를 직접 취소 ----
+for (const ev of ['gesturestart', 'gesturechange', 'gestureend']) document.addEventListener(ev, e => e.preventDefault(), { passive: false });
+document.addEventListener('touchstart', e => { if (e.touches.length > 1) e.preventDefault(); }, { passive: false }); // 두 번째 손가락 = 핀치 시작 → 즉시 취소 (패드 멀티터치는 pointer 이벤트라 영향 없음)
+document.addEventListener('touchmove', e => { if (e.touches.length > 1 || (e.scale !== undefined && e.scale !== 1)) e.preventDefault(); }, { passive: false });
+document.addEventListener('dblclick', e => e.preventDefault(), { passive: false });
+let lastTouchEnd = 0; document.addEventListener('touchend', e => { const t = Date.now(); if (t - lastTouchEnd < 300 && !e.target.closest('select, button')) e.preventDefault(); lastTouchEnd = t; }, { passive: false });
+document.addEventListener('wheel', e => { if (e.ctrlKey) e.preventDefault(); }, { passive: false }); // 트랙패드 핀치
+document.addEventListener('contextmenu', e => { if (!e.target.closest('#log')) e.preventDefault(); }); // 길게 누름 메뉴
+// ---- 전체화면(안드로이드/데스크톱; iOS 는 홈 화면에 추가하면 전체화면) ----
+const fsBtn = document.getElementById('fullscreen');
+if (document.documentElement.requestFullscreen && !matchMedia('(display-mode: standalone)').matches) { fsBtn.style.display = ''; fsBtn.onclick = () => { if (document.fullscreenElement) document.exitFullscreen(); else document.documentElement.requestFullscreen({ navigationUI: 'hide' }).then(() => screen.orientation?.lock?.('landscape').catch(() => {})).catch(() => {}); }; }
+// ---- 플레이 중 화면 꺼짐 방지 ----
+let wakeLock = null; async function keepAwake() { try { wakeLock = await navigator.wakeLock?.request('screen'); } catch {} }
+document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') keepAwake(); });
+const names = await (await fetch('./glweb-natives.json')).json();
+rt.installGL(names);
+for (const [name, file] of [['AmpedKR', 'NotoSansKR-Regular.ttf'], ['AmpedJP', 'NotoSansJP-Regular.ttf']]) { try { const ff = new FontFace(name, `url(./game/fonts/${file})`); await ff.load(); document.fonts.add(ff); } catch (e) { console.warn('font', name, e); } }
+statusEl.textContent = 'JVM 로딩…'; setPhase(1);
+await cheerpjInit({ natives: rt.natives, status: 'none', enableInputMethods: false });
+// AWT Toolkit(아이콘 이미지 로딩 등)이 디스플레이를 요구한다 → 화면 밖 1x1 디스플레이
+const awt = document.createElement('div'); awt.style.cssText = 'position:fixed;left:-10px;top:-10px;width:1px;height:1px;overflow:hidden;opacity:0;pointer-events:none';
+document.body.appendChild(awt); cheerpjCreateDisplay(1, 1, awt);
+statusEl.textContent = '게임 시작…'; setPhase(2);
+const cp = ['patch.jar', 'keel.jar', 'keelx.jar', 'png.jar'].map(j => '/app/game/' + j).join(':');
+const extra = []; if (params.get('debug')) extra.push('-debug'); if (params.get('accs')) extra.push('-accs', params.get('accs'));
+const code = await cheerpjRunMain('amped.web.Main', cp, '-lang', lang, ...extra);
+statusEl.textContent = '종료 코드 ' + code;
+</script>
+</body>
+</html>

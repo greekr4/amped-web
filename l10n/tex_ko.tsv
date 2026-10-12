@@ -1,0 +1,70 @@
+# 이미지(.tex)에 그려진 일본어 → 한국어 재렌더링 표
+# 경로(resource 기준)	텍스트(\n 줄바꿈)	모드	글자px(0=자동)	글자색	외곽선색
+# 모드: clear(투명 배경에 글자만) | inpaint(밝은 글자 픽셀을 배경색으로 덮고 글자) | flat(불투명 픽셀 전부 배경색, 모양 유지) | fill:RRGGBB(단색 배경) | 모드:y0-y1(세로 구간 비율, 예 inpaint:0-0.3)
+rule/ball1/blue.tex	파란 구슬을 마구 깨라!	flat	0	ffffff	1a2430
+rule/ball1/red.tex	빨간 구슬을 마구 깨라!	flat	0	ffffff	1a2430
+rule/ball1/single.tex	나오는 구슬을 마구 깨라!	flat	0	ffffff	1a2430
+rule/baske/blue.tex	앰프드 바스켓	flat	0	ffffff	1a2430
+rule/baske/red.tex	앰프드 바스켓	flat	0	ffffff	1a2430
+rule/battle/blue.tex	레드 팀을 전멸시켜라!	flat	0	ffffff	1a2430
+rule/battle/red.tex	블루 팀을 전멸시켜라!	flat	0	ffffff	1a2430
+rule/battle/single.tex	전원 쓰러뜨리고 살아남아라!	flat	0	ffffff	1a2430
+rule/challenge/single.tex	밀려오는 적을 모두 쓰러뜨려라!!	flat	0	ffffff	1a2430
+rule/dead.tex	YOU ARE DEAD\n결정 버튼으로 카메라가 바뀐다!	fill:101018	0	ffffff	000000
+rule/dogfight/single.tex	전원 쓰러뜨리고 살아남아라!	flat	0	ffffff	1a2430
+rule/duel/blue.tex	레드 팀을 전멸시켜라!	flat	0	ffffff	1a2430
+rule/duel/red.tex	블루 팀을 전멸시켜라!	flat	0	ffffff	1a2430
+rule/duel/single.tex	전원 쓰러뜨리고 살아남아라!	flat	0	ffffff	1a2430
+rule/flag1/blue.tex	파란 깃발을 아군 진지로 되찾아라!	flat	0	ffffff	1a2430
+rule/flag1/red.tex	빨간 깃발을 아군 진지로 되찾아라!	flat	0	ffffff	1a2430
+rule/flag1/single.tex	깃발을 찾아 근처 진지에 놓아라!	flat	0	ffffff	1a2430
+rule/singleplay/blue.tex	파란 구슬을 지켜라! 빨간 구슬을 깨라!	flat	0	ffffff	1a2430
+rule/singleplay/red.tex	빨간 구슬을 지켜라! 파란 구슬을 깨라!	flat	0	ffffff	1a2430
+rule/singleplay/single.tex	데스트로소 놈들을 몰살하라!!	flat	0	ffffff	1a2430
+rule/soccer/blue.tex	앰프드 사커	flat	0	ffffff	1a2430
+rule/soccer/red.tex	앰프드 사커	flat	0	ffffff	1a2430
+rule/teamdog/blue.tex	레드 팀을 전멸시켜라!	flat	0	ffffff	1a2430
+rule/teamdog/red.tex	블루 팀을 전멸시켜라!	flat	0	ffffff	1a2430
+rule/teamdog/single.tex	전원 쓰러뜨리고 살아남아라!	flat	0	ffffff	1a2430
+rule/volley/blue.tex	앰프드 발리	flat	0	ffffff	1a2430
+rule/volley/red.tex	앰프드 발리	flat	0	ffffff	1a2430
+component/menu/challengetitle.tex	챌린지	clear	24	ffffff	2a3440
+component/menu/chattitle.tex	채팅룸	clear	24	ffffff	2a3440
+component/menu/edittitle.tex	플레이어 에디트	clear	22	ffffff	2a3440
+component/menu/optiontitle.tex	옵션	clear	24	ffffff	2a3440
+component/menu/tourtitle.tex	투어	clear	24	ffffff	2a3440
+component/menu/connectct.tex	접속 인원	clear	14	ffffff	2a3440
+component/menu/chatct.tex	채팅	clear	14	ffffff	2a3440
+component/gaiden/logo.tex	변두리의 침략자\n겟앰프드 외전	clear	44	ffffff	7a1010
+component/gaiden/badend.tex	아쉽다...	clear:0.7-1	34	c8c8d0	2a3440
+component/gaiden/bafabon/name.tex	바파본	clear	0	ffffff	2a3440
+component/gaiden/bob/name.tex	데인저러스 밥	clear	0	ffffff	2a3440
+component/gaiden/bobooi/name.tex	보보이	clear	0	ffffff	2a3440
+component/gaiden/bon/name.tex	본 이토	clear	0	ffffff	2a3440
+component/gaiden/core/name.tex	동키 코어	clear	0	ffffff	2a3440
+component/gaiden/dragon/name.tex	오무사 드래곤	clear	0	ffffff	2a3440
+component/gaiden/fabicro/name.tex	파비크로	clear	0	ffffff	2a3440
+component/gaiden/fabicro3/name.tex	파비크로 3	clear	0	ffffff	2a3440
+component/gaiden/gori/name.tex	고리 맥켄지	clear	0	ffffff	2a3440
+component/gaiden/greater/name.tex	그레이터 노보루	clear	0	ffffff	2a3440
+component/gaiden/linda/name.tex	린다 보우보우	clear	0	ffffff	2a3440
+component/gaiden/mike/name.tex	마이크 데이비스	clear	0	ffffff	2a3440
+component/gaiden/noboru/name.tex	재키 노보루	clear	0	ffffff	2a3440
+component/gaiden/omusa/name.tex	오므니사이더	clear	0	ffffff	2a3440
+component/gaiden/taisa/name.tex	살인대령	clear	0	ffffff	2a3440
+component/rank/draw.tex	무승부	clear	0	e0e0e0	2a3440
+component/rank/lost.tex	패배	clear	0	b0b0b0	2a3440
+component/rank/won.tex	승리	clear	0	ffffff	2a3440
+component/rank/outofrank.tex	랭크 외	clear	0	c0c0c0	2a3440
+component/rank/10.tex	패	flat	0	ffffff	600000
+component/rank/prize1.tex	살인상	clear	0	8fe04a	1a3010
+component/rank/prize2.tex	참살상	clear	0	ffb040	402000
+component/rank/prize3.tex	박살상	clear	0	ff9040	402000
+component/rank/prize4.tex	회피상	clear	0	80c0ff	102040
+component/rank/prize5.tex	평화상	clear	0	e8e8e8	303030
+component/rank/prize6.tex	요절상	clear	0	a0d0ff	102040
+component/rank/result1.tex	경기 결과	clear	0	e8e8e8	2a3440
+component/rank/result2.tex	중간 경과	clear	0	e8e8e8	2a3440
+component/rank/result3.tex	최종 결과	clear	0	e8e8e8	2a3440
+component/rank/result4.tex	최종 결과	clear	0	e8e8e8	2a3440
+component/rank/tokubetu.tex	특별상	fill:ffffff	0	000000	ffffff

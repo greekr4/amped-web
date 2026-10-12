@@ -1,0 +1,27 @@
+{
+ "name": "GetAmped Web",
+ "short_name": "GetAmped",
+ "description": "싱글 겟앰프드 웹버전",
+ "start_url": "./",
+ "display": "fullscreen",
+ "orientation": "any",
+ "background_color": "#111111",
+ "theme_color": "#222222",
+ "icons": [
+  {
+   "src": "./favicon-32.png",
+   "sizes": "32x32",
+   "type": "image/png"
+  },
+  {
+   "src": "./apple-touch-icon.png",
+   "sizes": "180x180",
+   "type": "image/png"
+  },
+  {
+   "src": "./icon-512.png",
+   "sizes": "512x512",
+   "type": "image/png"
+  }
+ ]
+}

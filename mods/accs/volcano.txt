@@ -1,0 +1,16 @@
+# 볼케이노 건틀릿 — 양손 화염 글러브 + 등의 대형 방패 + 양 손목 팔찌 + 몸에 두른 오라.
+# 모든 공격(C/X/CC/CCC/XX/대시/조준Z+C,Z+X,Z+XC/점프 C,X)을 폭발·화염 기술로 교체한다.
+stat STR 4
+stat TEC 1
+stat SPD 0
+stat JMP 1
+stat DEF -2
+playerdata /accs/volcano.poa
+# part <부위> <모델> x y z  sx sy sz  rx ry rz
+part 7  /accs/obj/boxergrub.prm   0.42 0.0 0.03  1.35 1.35 1.35  0 180 0
+part 0  /accs/obj/boxergrub.prm  -0.42 0.0 0.03  1.35 1.35 1.35  0 0 0
+part 12 /accs/obj/chun_bless.prm -0.28 0.02 0.02  1.3 1.3 1.3  0 0 0
+part 6  /accs/obj/chun_bless.prm  0.28 0.02 0.02  1.3 1.3 1.3  0 0 0
+part 13 /accs/obj/back_shield2.prm 0.0 0.0 0.0  1.3 1.3 1.3  0 0 0
+part 13 /accs/obj/herobelt3.prm    0.0 0.0 0.0  1.05 1.05 1.05  0 0 0
+part 13 /effect/aura.shp           0.0 0.0 0.0  1.25 1.25 1.25  0 0 0

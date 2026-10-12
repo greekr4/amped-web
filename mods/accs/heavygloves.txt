@@ -1,0 +1,11 @@
+# 헤비 글러브 — 양손 복싱 글러브를 1.5배로 키운 묵직한 장갑.
+# 힘/방어는 오르고 속도/점프는 떨어진다. (원본 악세는 모두 스탯 0, 외형만)
+stat STR 3
+stat DEF 1
+stat SPD -2
+stat JMP -1
+# 기술 교체: mods/accs/heavygloves/poa.txt → resource/accs/heavygloves.poa (스타일 poa 를 통째로 대체)
+playerdata /accs/heavygloves.poa
+# part <부위> <모델> x y z  sx sy sz  rx ry rz(도)   — boxinggrab1.accs 배치를 기준으로 확대
+part 7 /accs/obj/boxergrub2.prm  0.45 0.0 0.03  1.5 1.5 1.5  0 180 0
+part 0 /accs/obj/boxergrub2.prm -0.45 0.0 0.03  1.5 1.5 1.5  0 0 0
