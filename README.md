@@ -32,7 +32,7 @@ URL 파라미터
 | 파라미터 | 뜻 |
 |---|---|
 | `lang=ko` / `ja` | 언어 |
-| `accs=heavygloves` / `volcano` | 스토리 캐릭터에 악세사리 장착. 상단 **악세** 버튼의 모아보기에서 골라도 됩니다 |
+| `accs=heavygloves` / `volcano` / `icegloves` | 스토리 캐릭터에 악세사리 장착. 상단 **악세** 버튼의 모아보기에서 골라도 됩니다 |
 | `pad=1` / `0` | 가상 패드 강제 표시 / 숨김 |
 | `debug=1` | 기술 판정 로그를 콘솔에 출력 |
 
@@ -89,7 +89,7 @@ Rust가 없으면 `node serve.mjs web 8777`.
 | `mods/accs/<이름>/poa.txt` | 기술 교체 (선택). 어떤 입력에 어떤 스크립트를 쓸지, 타격 정보 |
 | `mods/accs/<이름>/*.sc` | 기술 스크립트 (선택). 애니메이션·이동·타격·이펙트를 시간순으로 |
 
-만든 뒤 `game-overrides/.../NewSetting.java`의 `EXTRA_ACCESSORIES`에 이름을 넣고 빌드하면 `?accs=<이름>`으로 장착됩니다. 예제 두 개(`heavygloves`, `volcano`)가 그대로 템플릿입니다.
+만든 뒤 `game-overrides/.../NewSetting.java`의 `EXTRA_ACCESSORIES`에 이름을 넣고 빌드하면 `?accs=<이름>`으로 장착됩니다. 예제 세 개(`heavygloves`, `volcano`, `icegloves`)가 그대로 템플릿입니다.
 
 ### 방법 1: 에이전트에게 시키기
 
@@ -178,7 +178,7 @@ amped-web/
 ├─ patch/src/        # 네이티브 DLL 을 대신하는 자바 클래스
 ├─ game-overrides/   # 고친 게임 클래스 몇 개 (폰트, 오디오, 악세 목록, 디버그 로그)
 ├─ tools/            # 복호화·코드 생성·텍스처·악세/poa 도구
-├─ mods/accs/        # 악세사리 스펙과 스크립트 (예제 2종). 스펙 맨 위 주석이 모아보기 설명이 됨
+├─ mods/accs/        # 악세사리 스펙과 스크립트 (예제 3종). 스펙 맨 위 주석이 모아보기 설명이 됨
 ├─ l10n/             # 번역표, 이미지 글자 재렌더 표
 ├─ docs/             # 모딩 규칙(modding-rules.md), 카페 강좌 정리(modding-guide.md)
 ├─ server/           # 로컬용 Rust 정적 서버

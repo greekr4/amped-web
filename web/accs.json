@@ -13,6 +13,20 @@
   "techs": true
  },
  {
+  "id": "icegloves",
+  "name": "얼음 장갑",
+  "summary": "양손 파란 글러브. 모든 공격이 얼음 기술로 바뀌고 어퍼·X 2타·Z+X+C 는 광역.",
+  "detail": "GitHub 이슈 #1 요청. 능력치 전부 +3.",
+  "stats": {
+   "STR": 3,
+   "TEC": 3,
+   "SPD": 3,
+   "JMP": 3,
+   "DEF": 3
+  },
+  "techs": true
+ },
+ {
   "id": "volcano",
   "name": "볼케이노 건틀릿",
   "summary": "화염 글러브와 등의 대형 방패, 몸에 두른 오라. 모든 공격이 폭발·화염 기술로 바뀐다.",
