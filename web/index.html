@@ -61,17 +61,19 @@
   body.pad #pad { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
   #dpad { display: grid; gap: 4px; }
   #dpad .k { grid-column: var(--c); grid-row: var(--r); }
-  #btns { display: grid; grid-template-columns: repeat(4, 44px); grid-template-rows: 60px; gap: 6px; } /* 세로: 한 줄 */
-  #dpad { grid-template-columns: repeat(3, 44px); grid-template-rows: repeat(3, 44px); }
-  .k { display: flex; flex-direction: column; align-items: center; justify-content: center; border-radius: 10px; background: #2a2a2a; color: #eee; border: 1px solid #444; font: 600 17px/1 system-ui, sans-serif; touch-action: none; }
-  .k small { font-size: 9px; color: #9a9a9a; margin-top: 4px; font-weight: 400; white-space: nowrap; }
-  .k.on { background: #4a7bd0; border-color: #6c9af0; }
-  #btns .k[data-key="v"] { background: #3a3a2a; } #btns .k[data-key="x"] { background: #3a2a2a; }
+  #btns { display: grid; grid-template-columns: repeat(4, 44px); grid-template-rows: repeat(2, 44px); gap: 8px; } /* 1줄: Z X C V, 2줄: 조합 */
+  #btns .combo { font-size: 12px; letter-spacing: -0.5px; }
+  #dpad { grid-template-columns: repeat(3, 44px); grid-template-rows: repeat(2, 44px); gap: 8px; } /* 키보드처럼 ▲ 위, ◀▼▶ 아래 */
+  /* 모든 키는 같은 흰색 3D 키캡(⌨️) 디자인: 윗면 그라데이션 + 아래 두께 그림자, 누르면 내려앉음 */
+  .k { display: flex; align-items: center; justify-content: center; border-radius: 8px; color: #222; font: 700 17px/1 system-ui, sans-serif; touch-action: none;
+       background: linear-gradient(180deg, #fafafa 0%, #dcdcdc 100%); border: 1px solid #9a9a9a; border-bottom: 0;
+       box-shadow: 0 4px 0 #a8a8a8, 0 5px 0 #7d7d7d, 0 7px 8px rgba(0,0,0,.6), inset 0 1px 0 #fff; transform: translateY(0); transition: transform .05s, box-shadow .05s; }
+  .k.on { background: linear-gradient(180deg, #d8d8d8 0%, #c4c4c4 100%); transform: translateY(4px); box-shadow: 0 1px 0 #7d7d7d, 0 2px 3px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.5); }
   @media (orientation: landscape) and (max-height: 600px) {
-    body.pad #pad { position: fixed; left: 0; right: 0; bottom: 0; padding: 0 12px 12px; background: transparent; border: 0; pointer-events: none; }
-    body.pad #pad .k { pointer-events: auto; opacity: 0.72; backdrop-filter: blur(2px); }
-    #dpad { grid-template-columns: repeat(3, 48px); grid-template-rows: repeat(3, 48px); }
-    #btns { grid-template-columns: repeat(4, 48px); grid-template-rows: 56px; gap: 6px; } /* 가로도 한 줄 */
+    body.pad #pad { position: fixed; left: 0; right: 0; bottom: 0; z-index: 6; padding: 0 12px 12px; background: transparent; border: 0; pointer-events: none; }
+    body.pad #pad .k { pointer-events: auto; opacity: 0.85; }
+    #dpad { grid-template-columns: repeat(3, 48px); grid-template-rows: repeat(2, 48px); }
+    #btns { grid-template-columns: repeat(4, 48px); grid-template-rows: repeat(2, 48px); gap: 8px; }
   }
   canvas { image-rendering: pixelated; outline: none; }
   #log { max-height: 160px; overflow: auto; font: 11px/1.3 ui-monospace, monospace; background: #0b0b0b; color: #9c9; padding: 4px 8px; white-space: pre-wrap; }
@@ -105,16 +107,20 @@
   <div id="stage"><div id="loading"><div class="spin"></div><div class="bar"><i></i></div><div class="detail">&nbsp;</div></div></div>
   <div id="pad">
     <div id="btns">
-      <div class="k" data-key="z">Z<small>조준</small></div>
-      <div class="k" data-key="x">X<small>강공격</small></div>
-      <div class="k" data-key="c">C<small>약공격</small></div>
-      <div class="k" data-key="v">V<small>점프</small></div>
+      <div class="k" data-key="z">Z</div>
+      <div class="k" data-key="x">X</div>
+      <div class="k" data-key="c">C</div>
+      <div class="k" data-key="v">V</div>
+      <div class="k combo" data-key="zx">ZX</div>
+      <div class="k combo" data-key="zc">ZC</div>
+      <div class="k combo" data-key="xc">XC</div>
+      <div class="k combo" data-key="zxc">ZXC</div>
     </div>
     <div id="dpad">
       <div class="k" data-key="ArrowUp" style="--c:2;--r:1">▲</div>
       <div class="k" data-key="ArrowLeft" style="--c:1;--r:2">◀</div>
+      <div class="k" data-key="ArrowDown" style="--c:2;--r:2">▼</div>
       <div class="k" data-key="ArrowRight" style="--c:3;--r:2">▶</div>
-      <div class="k" data-key="ArrowDown" style="--c:2;--r:3">▼</div>
     </div>
   </div>
   <div id="log" style="display:none"></div>
@@ -171,14 +177,20 @@ const KEYS = { ArrowUp: [38, 0xFFFF], ArrowDown: [40, 0xFFFF], ArrowLeft: [37, 0
 const padOn = params.get('pad') === '1' || (params.get('pad') !== '0' && matchMedia('(pointer: coarse)').matches);
 document.body.classList.toggle('pad', padOn);
 document.getElementById('togglePad').onclick = () => { document.body.classList.toggle('pad'); window.dispatchEvent(new Event('resize')); };
-const held = new Map(); // pointerId → 키 이름
-function padDown(id, name) { if (held.get(id) === name) return; padUp(id); held.set(id, name); const [code, ch] = KEYS[name]; rt.key(code, ch, true); document.querySelector(`.k[data-key="${name}"]`)?.classList.add('on'); }
-function padUp(id) { const name = held.get(id); if (!name) return; held.delete(id); if (![...held.values()].includes(name)) { const [code, ch] = KEYS[name]; rt.key(code, ch, false); document.querySelector(`.k[data-key="${name}"]`)?.classList.remove('on'); } }
+// 조합 버튼(Z+X 등)은 실제 키 여러 개를 동시에 누른다. 실제 키별로 누른 횟수를 세어 0 이 될 때만 뗀다.
+const COMBO = { zx: ['z', 'x'], zc: ['z', 'c'], xc: ['x', 'c'], zxc: ['z', 'x', 'c'] };
+const keysOf = name => COMBO[name] || [name];
+const held = new Map(); // pointerId → 버튼 이름
+const pressed = new Map(); // 실제 키 → 누른 횟수
+function realDown(k) { pressed.set(k, (pressed.get(k) || 0) + 1); if (pressed.get(k) === 1) { const [code, ch] = KEYS[k]; rt.key(code, ch, true); } }
+function realUp(k) { const n = (pressed.get(k) || 0) - 1; pressed.set(k, Math.max(n, 0)); if (n === 0) { const [code, ch] = KEYS[k]; rt.key(code, ch, false); } }
+function padDown(id, name) { if (held.get(id) === name) return; padUp(id); held.set(id, name); keysOf(name).forEach(realDown); document.querySelector(`.k[data-key="${name}"]`)?.classList.add('on'); }
+function padUp(id) { const name = held.get(id); if (!name) return; held.delete(id); keysOf(name).forEach(realUp); if (![...held.values()].includes(name)) document.querySelector(`.k[data-key="${name}"]`)?.classList.remove('on'); }
 const pad = document.getElementById('pad');
 for (const el of [pad, document.getElementById('stage')]) for (const ev of ['touchstart', 'touchend', 'touchmove']) el.addEventListener(ev, e => e.preventDefault(), { passive: false });
 pad.addEventListener('pointerdown', e => { const k = e.target.closest('.k'); if (!k) return; e.preventDefault(); padDown(e.pointerId, k.dataset.key); });
 // 십자키 위에서 손가락을 미끄러뜨리면 방향 전환 (대시용 두 번 탭도 그대로 됨)
-pad.addEventListener('pointermove', e => { if (!held.has(e.pointerId)) return; const el = document.elementFromPoint(e.clientX, e.clientY)?.closest?.('#dpad .k'); if (el && el.dataset.key !== held.get(e.pointerId) && KEYS[held.get(e.pointerId)][1] === 0xFFFF) padDown(e.pointerId, el.dataset.key); });
+pad.addEventListener('pointermove', e => { if (!held.has(e.pointerId)) return; const el = document.elementFromPoint(e.clientX, e.clientY)?.closest?.('#dpad .k'); if (el && el.dataset.key !== held.get(e.pointerId) && held.get(e.pointerId).startsWith('Arrow')) padDown(e.pointerId, el.dataset.key); });
 for (const ev of ['pointerup', 'pointercancel']) pad.addEventListener(ev, e => padUp(e.pointerId));
 pad.addEventListener('contextmenu', e => e.preventDefault());
 window.addEventListener('blur', () => { for (const id of [...held.keys()]) padUp(id); });
