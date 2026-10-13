@@ -1,6 +1,4 @@
 # 1단계: 타이틀·메뉴 (런타임 초기화 직후)
-/game/l10n/ko.tsv
-/game/l10n/ko/files.txt
 /game/resource/component/font.tex
 /game/resource/sound/1.sr
 /game/resource/sound/a.sr

@@ -220,7 +220,7 @@ const preload = { pending: [], ready: false, done: 0, total: 0, added: 0 }; wind
 function preloadPut(path, bytes) { const name = '/str/' + path.replace(/\//g, '~'); if (preload.ready) { cheerpOSAddStringFile(name, bytes); preload.added++; } else preload.pending.push([name, bytes]); }
 function preloadFlush() { if (typeof cheerpOSAddStringFile !== 'function') { console.warn('[preload] cheerpOSAddStringFile 없음'); preload.pending = []; return; } preload.ready = true; for (const [n, b] of preload.pending) { cheerpOSAddStringFile(n, b); preload.added++; } preload.pending = []; }
 let preloadStage2 = null; // 2단계 목록 (게임 화면이 뜬 뒤 startPreloadStage2 가 받는다)
-async function preloadFetch(list, conc) { let i = 0; const worker = async () => { while (i < list.length) { const p = list[i++]; try { const r = await fetch('.' + p, { priority: 'low' }); if (r.ok) preloadPut(p.replace(/^\//, ''), new Uint8Array(await r.arrayBuffer())); } catch {} preload.done++; } }; await Promise.all(Array.from({ length: conc }, worker)); }
+async function preloadFetch(list, conc) { let i = 0; const worker = async () => { while (i < list.length) { const p = list[i++]; try { const r = await fetch('.' + p + '?pre', { priority: 'low' }); // ?pre: CheerpJ 의 Range 요청과 캐시 키를 분리 (같은 URL 이 동시에 나가면 브라우저 캐시가 합쳐 stat 이 깨진다) if (r.ok) preloadPut(p.replace(/^\//, ''), new Uint8Array(await r.arrayBuffer())); } catch {} preload.done++; } }; await Promise.all(Array.from({ length: conc }, worker)); }
 function startPreload() { if (params.get('preload') === '0') return; (async () => {
   try {
     // preload.txt: '#' 줄로 1단계(타이틀·메뉴, 작음)와 2단계(그 뒤 전투까지, 7MB대)를 나눈다.
