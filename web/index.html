@@ -148,7 +148,7 @@ function setPhase(n) { phaseNo = n; loadBar.style.width = (n * 30) + '%'; }
 function noteDownload(url, bytes) { if (!/cjrtnc|\/game\//.test(url)) return; dlSeen.add(url.split('?')[0]); dlBytes += bytes || 0; loadDetail.textContent = `파일 ${dlSeen.size.toLocaleString()}개 · ${(dlBytes / 1048576).toFixed(1)} MB 받음`; loadBar.style.width = Math.min(95, phaseNo * 30 + Math.min(30, dlBytes / 2e6)) + '%'; }
 const _fetch = window.fetch; window.fetch = async function (input, init) { const r = await _fetch.call(this, input, init); try { const u = typeof input === 'string' ? input : input.url; if (r.ok) noteDownload(u, +r.headers.get('content-length') || 0); } catch {} return r; }; // 206(Range) 응답도 content-length = 받은 조각 크기
 const _open = XMLHttpRequest.prototype.open; XMLHttpRequest.prototype.open = function (m, u) { this.addEventListener('loadend', () => { try { if (this.status >= 200 && this.status < 300) noteDownload(String(u), +this.getResponseHeader('content-length') || 0); } catch {} }); return _open.apply(this, arguments); };
-new MutationObserver(() => { if (document.getElementById('game')) { keepAwake(); loadBar.style.width = '100%'; setTimeout(() => loadingEl.classList.add('hide'), 400); } }).observe(document.getElementById('stage'), { childList: true });
+new MutationObserver(() => { if (document.getElementById('game')) { keepAwake(); if (typeof startPreloadStage2 === 'function') startPreloadStage2(); loadBar.style.width = '100%'; setTimeout(() => loadingEl.classList.add('hide'), 400); } }).observe(document.getElementById('stage'), { childList: true });
 setPhase(0);
 const params = new URLSearchParams(location.search);
 const lang = params.get('lang') || ((navigator.language || '').toLowerCase().startsWith('ko') ? 'ko' : 'ja');
@@ -213,6 +213,29 @@ rt.installGL(names);
 for (const [name, file] of [['AmpedKR', 'NotoSansKR-Regular.ttf'], ['AmpedJP', 'NotoSansJP-Regular.ttf']]) { try { const ff = new FontFace(name, `url(./game/fonts/${file})`); await ff.load(); document.fonts.add(ff); } catch (e) { console.warn('font', name, e); } }
 statusEl.textContent = 'JVM 로딩…'; setPhase(1);
 await cheerpjInit({ natives: rt.natives, status: 'none', enableInputMethods: false });
+// ---- 리소스 선로딩: 런타임 로드가 끝난 뒤, JVM 워밍업(CPU) 동안 노는 네트워크로 게임 리소스를 병렬로 받아 CheerpJ 메모리 FS(/str/)에 넣는다.
+// 게임이 /app/game/resource/... 를 열 때 자바 쪽(Preload.open)이 /str/ 사본을 먼저 쓴다. 목록은 web/preload.txt(타이틀→전투까지 실제 요청 순서).
+const preload = { pending: [], ready: false, done: 0, total: 0, added: 0 }; window.__preload = preload;
+// /str/ 는 디렉토리를 지원하지 않는 평면 저장소 → 경로의 '/' 를 '~' 로 바꾼 이름으로 넣는다 (자바 Preload.open 과 약속)
+function preloadPut(path, bytes) { const name = '/str/' + path.replace(/\//g, '~'); if (preload.ready) { cheerpOSAddStringFile(name, bytes); preload.added++; } else preload.pending.push([name, bytes]); }
+function preloadFlush() { if (typeof cheerpOSAddStringFile !== 'function') { console.warn('[preload] cheerpOSAddStringFile 없음'); preload.pending = []; return; } preload.ready = true; for (const [n, b] of preload.pending) { cheerpOSAddStringFile(n, b); preload.added++; } preload.pending = []; }
+let preloadStage2 = null; // 2단계 목록 (게임 화면이 뜬 뒤 startPreloadStage2 가 받는다)
+async function preloadFetch(list, conc) { let i = 0; const worker = async () => { while (i < list.length) { const p = list[i++]; try { const r = await fetch('.' + p, { priority: 'low' }); if (r.ok) preloadPut(p.replace(/^\//, ''), new Uint8Array(await r.arrayBuffer())); } catch {} preload.done++; } }; await Promise.all(Array.from({ length: conc }, worker)); }
+function startPreload() { if (params.get('preload') === '0') return; (async () => {
+  try {
+    // preload.txt: '#' 줄로 1단계(타이틀·메뉴, 작음)와 2단계(그 뒤 전투까지, 7MB대)를 나눈다.
+    // 2단계를 JVM 기동 중에 받으면 런타임 지연 로딩과 대역폭을 나눠 첫 화면이 늦어지므로 게임 화면이 뜬 뒤 시작한다.
+    const all = (await (await fetch('./preload.txt')).text()).split('\n').map(s => s.trim()).filter(Boolean);
+    const stages = []; for (const l of all) { if (l.startsWith('#')) stages.push([]); else (stages[stages.length - 1] || (stages[0] = []) ).push(l); }
+    const s1 = stages[0] || [], s2 = stages.slice(1).flat(); preload.total = s1.length + s2.length;
+    preloadStage2 = s2; if (document.getElementById('game')) startPreloadStage2();
+    await preloadFetch(s1, 6);
+    console.log('[preload] stage1 done', s1.length);
+  } catch (e) { console.warn('[preload]', e); }
+})(); }
+// 게임 화면이 뜬 직후는 메뉴 리소스·클래스 로딩(jar Range 요청)이 몰리므로 6초 뒤에, 동시 4개로 가볍게 시작한다
+function startPreloadStage2() { const l = preloadStage2; preloadStage2 = null; if (!l || !l.length) return; setTimeout(() => preloadFetch(l, 4).then(() => console.log('[preload] done', preload.done, '/', preload.total)), 6000); }
+preloadFlush(); startPreload(); // cheerpOSAddStringFile 는 런타임 로드 뒤에 쓸 수 있다
 // AWT Toolkit(아이콘 이미지 로딩 등)이 디스플레이를 요구한다 → 화면 밖 1x1 디스플레이
 const awt = document.createElement('div'); awt.style.cssText = 'position:fixed;left:-10px;top:-10px;width:1px;height:1px;overflow:hidden;opacity:0;pointer-events:none';
 document.body.appendChild(awt); cheerpjCreateDisplay(1, 1, awt);

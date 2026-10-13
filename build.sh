@@ -51,6 +51,8 @@ for tsv in "$HERE"/l10n/[a-z][a-z].tsv; do
   if [ -f "$HERE/l10n/tex_$lang.tsv" ]; then
     mkdir -p "$OUT/l10n/$lang/resource"
     (cd "$HERE" && "$JAVA" -cp "$TMP/textool:$TMP/amped-classes:$GAME/keel.jar:$GAME/keelx.jar" TexTool batch "$HERE/l10n/tex_$lang.tsv" "$OUT/resource" "$OUT/l10n/$lang/resource" | tail -1)
+    # 덮어쓰기 파일 목록 → 런타임이 파일마다 존재 여부를 HTTP 로 묻지 않게 (I18n.override)
+    (cd "$OUT/l10n/$lang/resource" && find . -type f ! -name index.list | sed 's|^\.||' | sort > "$OUT/l10n/$lang/files.txt")
   fi
   echo "l10n: $lang"
 done

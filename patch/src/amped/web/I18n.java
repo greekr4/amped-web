@@ -16,6 +16,7 @@ public final class I18n {
     private static final Map<String, String> map = new HashMap<String, String>();
     private static final Map<String, Boolean> fileCache = new HashMap<String, Boolean>();
     private static String overrideRoot = null;
+    private static java.util.Set<String> overrideSet = null; // files.txt 목록 (resource 기준 경로)
     private I18n() { }
 
     public static String lang() { return lang; }
@@ -37,7 +38,20 @@ public final class I18n {
         } catch (IOException e) { System.err.println("[I18n] " + e); }
         File dir = new File("/app/game/l10n/" + lang + "/resource");
         if (dir.exists()) overrideRoot = dir.getPath();
-        System.err.println("[I18n] " + lang + ": " + map.size() + " strings, overrides=" + overrideRoot);
+        // 덮어쓰기 파일 목록(files.txt)을 한 번에 읽어 둔다. 없으면 파일마다 isFile() 로 탐색하는데,
+        // CheerpJ 에선 그게 리소스마다 HTTP 요청(404) 하나씩이라 화면 전환이 두 배로 느려진다.
+        overrideSet = null;
+        if (overrideRoot != null) {
+            File list = new File("/app/game/l10n/" + lang + "/files.txt");
+            if (list.exists()) {
+                java.util.HashSet<String> set = new java.util.HashSet<String>();
+                try (BufferedReader r = new BufferedReader(new InputStreamReader(new FileInputStream(list), StandardCharsets.UTF_8))) {
+                    String line; while ((line = r.readLine()) != null) { line = line.trim(); if (!line.isEmpty()) set.add(line.startsWith("/") ? line : "/" + line); }
+                    overrideSet = set;
+                } catch (IOException e) { System.err.println("[I18n] files.txt: " + e); }
+            }
+        }
+        System.err.println("[I18n] " + lang + ": " + map.size() + " strings, overrides=" + overrideRoot + (overrideSet != null ? " (" + overrideSet.size() + " files)" : " (probe)"));
     }
 
     public static String translate(String s) {
@@ -50,6 +64,7 @@ public final class I18n {
     public static File override(String resPath) {
         if (overrideRoot == null) return null;
         String key = resPath.startsWith("/") ? resPath : "/" + resPath;
+        if (overrideSet != null) return overrideSet.contains(key) ? new File(overrideRoot + key) : null;
         Boolean b = fileCache.get(key);
         File f = new File(overrideRoot + key);
         if (b == null) { b = Boolean.valueOf(f.isFile()); fileCache.put(key, b); }
