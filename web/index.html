@@ -77,6 +77,23 @@
   #log { max-height: 160px; overflow: auto; font: 11px/1.3 ui-monospace, monospace; background: #0b0b0b; color: #9c9; padding: 4px 8px; white-space: pre-wrap; }
   #log .err { color: #f88; }
   select, button { background: #333; color: #eee; border: 1px solid #555; padding: 3px 10px; border-radius: 4px; cursor: pointer; }
+  /* 악세 모아보기 모달 */
+  #accsModal { position: fixed; inset: 0; z-index: 20; display: none; align-items: center; justify-content: center; background: rgba(0,0,0,.72); padding: 16px; padding-top: calc(16px + env(safe-area-inset-top)); padding-bottom: calc(16px + env(safe-area-inset-bottom)); }
+  #accsModal.open { display: flex; }
+  #accsModal .box { width: min(560px, 100%); max-height: 100%; overflow: auto; background: #1b1b1b; border: 1px solid #444; border-radius: 12px; padding: 16px; display: flex; flex-direction: column; gap: 12px; }
+  #accsModal h2 { margin: 0; font-size: 16px; display: flex; align-items: center; justify-content: space-between; }
+  #accsModal h2 button { font-size: 14px; padding: 2px 9px; }
+  #accsList { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 10px; }
+  .accs { text-align: left; background: #262626; border: 1px solid #444; border-radius: 10px; padding: 12px; cursor: pointer; display: flex; flex-direction: column; gap: 6px; color: #eee; }
+  .accs:hover { border-color: #6c9af0; } .accs.cur { border-color: #4a7bd0; background: #243a5e; }
+  .accs .n { font-weight: 700; font-size: 15px; display: flex; justify-content: space-between; align-items: center; }
+  .accs .n small { font-weight: 400; font-size: 11px; color: #9ac; }
+  .accs .d { font-size: 12px; color: #bbb; }
+  .accs .s { display: flex; flex-wrap: wrap; gap: 4px; }
+  .accs .s i { font: 600 11px/1 ui-monospace, monospace; padding: 3px 6px; border-radius: 4px; background: #333; color: #ccc; font-style: normal; }
+  .accs .s i.up { background: #2d4a2d; color: #9e9; } .accs .s i.dn { background: #4a2d2d; color: #e99; }
+  #accsModal .req { font-size: 12px; color: #bbb; background: #222; border: 1px dashed #555; border-radius: 10px; padding: 10px 12px; line-height: 1.6; }
+  #accsModal .req a { color: #8fb4ff; }
 </style>
 <!-- Vercel Web Analytics (대시보드에서 켠 뒤 이 스크립트만 있으면 페이지뷰 수집) -->
 <script defer src="/_vercel/insights/script.js"></script>
@@ -84,7 +101,7 @@
 </head>
 <body>
 <div id="wrap">
-  <div id="bar"><b>GetAmped Web</b> <span id="status">초기화 중…</span> <button id="lang" title="언어 전환">한국어</button> <button id="fullscreen" style="display:none">전체화면</button> <button id="togglePad">패드</button> <button id="toggleLog">로그</button> <a id="gh" href="https://github.com/greekr4/amped-web" target="_blank" rel="noopener" title="GitHub 저장소" aria-label="GitHub"><svg viewBox="0 0 16 16" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg></a></div>
+  <div id="bar"><b>GetAmped Web</b> <span id="status">초기화 중…</span> <button id="lang" title="언어 전환">한국어</button> <button id="fullscreen" style="display:none">전체화면</button> <button id="accsBtn" title="악세사리 모아보기">악세</button> <button id="togglePad">패드</button> <button id="toggleLog">로그</button> <a id="gh" href="https://github.com/greekr4/amped-web" target="_blank" rel="noopener" title="GitHub 저장소" aria-label="GitHub"><svg viewBox="0 0 16 16" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg></a></div>
   <div id="stage"><div id="loading"><div class="spin"></div><div class="bar"><i></i></div><div class="detail">&nbsp;</div></div></div>
   <div id="pad">
     <div id="btns">
@@ -101,6 +118,13 @@
     </div>
   </div>
   <div id="log" style="display:none"></div>
+</div>
+<div id="accsModal" role="dialog" aria-modal="true" aria-labelledby="accsTitle">
+  <div class="box">
+    <h2><span id="accsTitle">악세사리 모아보기</span><button id="accsClose" aria-label="닫기">✕</button></h2>
+    <div id="accsList"></div>
+    <div class="req">원하는 악세사리가 없나요? <a href="https://github.com/greekr4/amped-web/issues/new?template=accessory-request.yml" target="_blank" rel="noopener">GitHub Issue</a>에 외형·능력치·기술을 적어 주시면 만들어서 배포합니다. 직접 만든 악세는 <a href="https://github.com/greekr4/amped-web/pulls" target="_blank" rel="noopener">PR</a>로 보내 주세요.</div>
+  </div>
 </div>
 <script type="module">
 import { createRuntime } from './runtime.js';
@@ -125,6 +149,22 @@ const lang = params.get('lang') || ((navigator.language || '').toLowerCase().sta
 // 언어 전환은 select 대신 버튼: iOS 사파리가 16px 미만 폼 컨트롤을 탭하면 강제 확대하기 때문 (user-scalable=no 무시)
 const langBtn = document.getElementById('lang'); const LANGS = { ko: '한국어', ja: '日本語' }; langBtn.textContent = LANGS[lang] || lang;
 langBtn.onclick = () => { params.set('lang', lang === 'ko' ? 'ja' : 'ko'); location.search = params.toString(); };
+// ---- 악세사리 모아보기: web/accs.json(빌드가 mods/accs/*.txt 에서 생성) → 카드, 클릭하면 ?accs= 바꿔 다시 로드 ----
+const accsModal = document.getElementById('accsModal'), accsList = document.getElementById('accsList'), curAccs = params.get('accs') || '';
+document.getElementById('accsBtn').onclick = () => accsModal.classList.add('open');
+document.getElementById('accsClose').onclick = () => accsModal.classList.remove('open');
+accsModal.addEventListener('click', e => { if (e.target === accsModal) accsModal.classList.remove('open'); });
+window.addEventListener('keydown', e => { if (e.key === 'Escape' && accsModal.classList.contains('open')) accsModal.classList.remove('open'); });
+function pickAccs(id) { if (id) params.set('accs', id); else params.delete('accs'); location.search = params.toString(); }
+function accsCard(a) {
+  const el = document.createElement('button'); el.className = 'accs' + (a.id === curAccs ? ' cur' : ''); el.type = 'button';
+  const stats = Object.entries(a.stats || {}).map(([k, v]) => `<i class="${v > 0 ? 'up' : 'dn'}">${k} ${v > 0 ? '+' : ''}${v}</i>`).join('');
+  el.innerHTML = `<div class="n"><span>${a.name}</span>${a.id === curAccs ? '<small>장착 중</small>' : ''}</div><div class="d">${a.summary || ''}</div>${stats ? `<div class="s">${stats}</div>` : ''}`;
+  el.onclick = () => pickAccs(a.id); return el;
+}
+fetch('./accs.json').then(r => r.json()).then(list => {
+  accsList.replaceChildren(accsCard({ id: '', name: '기본 (악세 없음)', summary: '스토리 캐릭터 원래 모습.' }), ...list.map(accsCard));
+}).catch(e => { accsList.textContent = '목록을 불러오지 못했습니다: ' + e; });
 const rt = createRuntime(document.getElementById('stage'), statusEl); window.amped = rt;
 // ---- 가상 패드: 터치 기기(coarse pointer)나 ?pad=1 이면 표시, 상단 "패드" 버튼으로 토글 ----
 const KEYS = { ArrowUp: [38, 0xFFFF], ArrowDown: [40, 0xFFFF], ArrowLeft: [37, 0xFFFF], ArrowRight: [39, 0xFFFF], z: [90, 122], x: [88, 120], c: [67, 99], v: [86, 118] };

@@ -1,0 +1,44 @@
+name: 악세사리 요청
+description: 원하는 악세사리를 적어 주세요. 만들어서 사이트에 배포합니다.
+title: "[악세 요청] "
+labels: ["accessory"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        외형·능력치·기술을 아는 만큼만 적어 주세요. 비어 있는 칸은 만드는 쪽에서 알맞게 채웁니다.
+        만들어진 악세는 사이트 상단 **악세** 버튼의 모아보기에 올라갑니다.
+  - type: input
+    id: name
+    attributes:
+      label: 이름
+      placeholder: "예: 얼음 장갑"
+    validations:
+      required: true
+  - type: textarea
+    id: look
+    attributes:
+      label: 외형
+      description: 어디에 무엇을 붙일지. 크기나 색 느낌도 좋습니다.
+      placeholder: "양손에 파란 글러브(1.3배), 등에 배낭"
+    validations:
+      required: true
+  - type: input
+    id: stats
+    attributes:
+      label: 능력치
+      description: STR / TEC / SPD / JMP / DEF 중 바꿀 것만. 비우면 0.
+      placeholder: "TEC +3, SPD +2, STR -1"
+  - type: textarea
+    id: techs
+    attributes:
+      label: 기술
+      description: 어떤 입력을 어떤 기술로 바꿀지. 입력은 C(약공격) X(강공격) Z+C/X(조준) 대시 X, 점프 C/X 등.
+      placeholder: |
+        서서 X → 얼음 파동을 앞으로 발사
+        점프 X → 내려찍기, 맞으면 멀리 날아감
+  - type: textarea
+    id: refs
+    attributes:
+      label: 참고
+      description: 원작 악세 이름, 그림, 영상 링크 등 참고가 될 것이 있으면.

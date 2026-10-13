@@ -56,4 +56,5 @@ for tsv in "$HERE"/l10n/[a-z][a-z].tsv; do
 done
 # 정적 호스팅용 디렉토리 목록 파일 (Vercel 등; 로컬 Rust 서버는 없어도 동적으로 만든다)
 python3 -I "$HERE/tools/gen_index_list.py" "$OUT" "$HERE/vercel.json"
+python3 -I "$HERE/tools/gen_accs_catalog.py" "$HERE/mods/accs" "$HERE/web/accs.json"
 echo "[4/4] 완료: $OUT"; du -sh "$OUT" | tail -1
