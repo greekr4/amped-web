@@ -4,7 +4,7 @@
 
 **바로 플레이:** https://amped-web.vercel.app
 
-![GetAmped Web](web/og.png)
+![GetAmped Web — 전투 화면](docs/images/battle.png)
 
 ## 할 수 있는 것
 
