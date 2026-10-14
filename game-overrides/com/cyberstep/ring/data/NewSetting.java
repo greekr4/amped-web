@@ -15,7 +15,7 @@ implements Serializable {
     /** mods/accs 로 만든 악세사리. 빌드 시 .accs 가 resource/accs/ 에 생성된다. */
     static final String[] EXTRA_ACCESSORIES = {
         "/accs/heavygloves.accs",
-        "/accs/volcano.accs", "/accs/icegloves.accs",
+        "/accs/volcano.accs", "/accs/icegloves.accs", "/accs/dronecontroller.accs",
     };
 
     public static void setSetting(NewSetting newSetting) {
