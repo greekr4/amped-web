@@ -1,56 +1,62 @@
-# 얼음 장갑 PlayerData — 격투가 poa 를 바탕으로 공격 기술을 전부 얼음 기술로 교체. (이슈 #1)
+# 얼음 장갑 PlayerData — 격투가 poa 를 바탕으로 교체. (이슈 #1) 슬롯 역할은 docs/accs-convention.md.
 base ../../../web/game/resource/player/style/kakutoum/player.poa
 
-# ---- 서서 약공격 C → CC → CCC : 얼음 잽 → 얼음 훅 → 서리 어퍼(광역: 앞+양옆) ----
+# ---- 기본공격 C → C→C → C→C→C : 얼음 잽 → 얼음 훅 → 서리 어퍼 (원본 모션 + 빙결) ----
 tech W_s   A SW icejab.sc
 tech W_ss  A -   icehook.sc    W_s  40 420
 tech W_sss A -   frostupper.sc W_ss 40 420
-attack icejab     attack_s1.aoa hit_freeze.sc 6  0.5 100 0.0 0.0 0.6 0.0
-attack icehook    attack_s1.aoa hit_freeze.sc 8  0.7 100 0.0 0.0 0.7 0.0
-attack frostup    attack_s2.aoa dhit_freeze.sc 13 0.9 120 0.0 0.5 0.4 0.0
-attack frostside1 attack_s2.aoa hit_freeze.sc 9  0.7 120 0.0 0.3 0.5 90.0
-attack frostside2 attack_s2.aoa hit_freeze.sc 9  0.7 120 0.0 0.3 0.5 270.0
+attack icejab  attack_s1.aoa hit_freeze.sc  5  0.5 100 0.0 0.0 0.6 0.0
+attack icehook attack_s1.aoa hit_freeze.sc  7  0.7 100 0.0 0.0 0.7 0.0
+attack frostup attack_s2.aoa hit_freeze.sc 11 0.9 120 0.0 0.5 0.4 0.0
 script icejab.sc     icejab.sc
 script icehook.sc    icehook.sc
 script frostupper.sc frostupper.sc
 
-# ---- 서서 강공격 X → XX : 빙결 스트레이트(2타, 광역 냉파) → 블리자드 돌진 ----
-tech W_b  B SW icestraight.sc
-tech W_bb B -   blizzardrush.sc W_b 40 700
-attack icepunch attack_s2.aoa hit_freeze.sc  13 0.9 120 0.0 0.0 0.7 0.0 kickback1.sc
-attack icewave  attack_s2.aoa dhit_freeze.sc 9  0.6 150 0.0 0.0 0.9 0.0
-attack icewaveL attack_s2.aoa hit_freeze.sc  7  0.5 150 0.0 0.0 0.8 45.0
-attack icewaveR attack_s2.aoa hit_freeze.sc  7  0.5 150 0.0 0.0 0.8 315.0
-attack rush     attack_s2.aoa hit_freeze.sc  12 0.8 250 0.0 0.0 0.7 0.0
-script icestraight.sc  icestraight.sc
+# ---- 기본공격 X : 빙결 스트레이트(2타). X→X 는 원본 keriage 유지 ----
+tech W_b B SW icestraight.sc
+attack icepunch attack_s2.aoa hit_freeze.sc  9 0.9 120 0.0 0.0 0.7 0.0 kickback1.sc
+attack icewave  attack_s2.aoa hit_freeze.sc 7 0.6 150 0.0 0.0 0.9 0.0
+script icestraight.sc icestraight.sc
+
+# ---- 대시 D+C / D+X : 얼음 어깨치기 / 블리자드 돌진(2히트) ----
+tech D_s A R iceshoulder.sc
+tech D_b B R blizzardrush.sc
+attack iceshoulder attack_s2.aoa hit_freeze.sc 10 0.8 150 0.0 0.0 0.6 0.0
+attack rush        attack_s2.aoa hit_freeze.sc 10 0.8 250 0.0 0.0 0.7 0.0
+script iceshoulder.sc  iceshoulder.sc
 script blizzardrush.sc blizzardrush.sc
 
-# ---- 대시 C / X : 얼음 어깨치기 / 아이스샷(발사체) ----
-tech D_s A R iceshoulder.sc
-tech D_b B R iceshot.sc
-attack iceshoulder attack_s2.aoa hit_freeze.sc 10 0.8 150 0.0 0.0 0.6 0.0
-attack iceshot /attack/iceshot.aoa hit_freeze.sc 14 0.6 400 0.0 0.1 0.6 0.0
-script iceshoulder.sc iceshoulder.sc
-script iceshot.sc     iceshot.sc
+# ---- 점프 V+C 원본(팔꿈치) / V+X 얼음 낙하 킥 ----
+tech J_b B F icekick.sc
+attack icekick attack_s3.aoa hit_freeze.sc 11 0.8 150 0.0 -0.1 0.6 0.0
+script icekick.sc icekick.sc
 
-# ---- 조준(Z 유지) + C / X / XC : 얼음탄 / 빙결 레이저 / 프로스트 노바(광역 사방) ----
-tech A_s A A iceball.sc
+# ---- 조준 Z+C / Z+X : 아이스샷(발사체) / 빙결 레이저(가드 무시) ----
+tech A_s A A iceshot.sc
 tech A_b B A icelaser.sc
-tech A_x AB A frostnova.sc
-attack iceball  /attack/iceshot.aoa hit_freeze.sc   10 0.5 400 0.0 0.1 0.6 0.0
-attack icelaser /attack/biglaser.aoa dhit_freeze.sc 26 0.8 800 0.0 0.2 0.6 0.0
-attack nova0    attack_s2.aoa dhit_freeze.sc 16 0.9 200 0.0 0.0 0.7 0.0
-attack nova90   attack_s2.aoa dhit_freeze.sc 16 0.9 200 0.0 0.0 0.7 90.0
-attack nova180  attack_s2.aoa dhit_freeze.sc 16 0.9 200 0.0 0.0 0.7 180.0
-attack nova270  attack_s2.aoa dhit_freeze.sc 16 0.9 200 0.0 0.0 0.7 270.0
-script iceball.sc   iceball.sc
-script icelaser.sc  icelaser.sc
-script frostnova.sc frostnova.sc
+attack iceshot  /attack/iceshot.aoa  hit_freeze.sc  12 0.6 400 0.0 0.1 0.6 0.0
+attack icelaser /attack/biglaser.aoa hit_freeze.sc 26 0.8 800 0.0 0.2 0.6 0.0
+script iceshot.sc  iceshot.sc
+script icelaser.sc icelaser.sc
 
-# ---- 점프 C / X : 얼음 낙하 킥 / 우박(수류탄 궤적) ----
-tech J_s A F icekick.sc
-tech J_b B F hailstone.sc
-attack icekick   attack_s3.aoa hit_freeze.sc 11 0.8 150 0.0 -0.1 0.6 0.0
-attack hailstone /attack/hgrenade.aoa dhit_freeze.sc 20 0.7 800 0.0 0.0 0.3 0.0
-script icekick.sc   icekick.sc
+# ---- 필살기 Z+XC 프로스트 노바 / V+XC 우박 / D+XC 빙판 슬라이딩 ----
+tech A_x AB A frostnova.sc
+tech J_x AB F hailstone.sc
+tech D_x AB R iceslide.sc
+attack spin       attack_s2.aoa hit_freeze.sc 13 0.8 170 0.0 0.0 0.8 0.0
+attack spinEnd0   attack_s2.aoa hit_freeze.sc 14 0.9 250 0.0 0.0 0.7 0.0
+attack spinEnd90  attack_s2.aoa hit_freeze.sc 14 0.9 250 0.0 0.0 0.7 90.0
+attack spinEnd180 attack_s2.aoa hit_freeze.sc 14 0.9 250 0.0 0.0 0.7 180.0
+attack spinEnd270 attack_s2.aoa hit_freeze.sc 14 0.9 250 0.0 0.0 0.7 270.0
+# 우박 전용 발사체: 수류탄 aoa 바탕, 크기 1.8배, 착탄 시 반경 1.5 빙결 폭발
+aoa hail.aoa ../../../web/game/resource/attack/hgrenade.aoa attack.sc hail_fly.sc end.sc hail_end.sc
+attack hailstone    hail.aoa hit_freeze.sc 9 0.8 800 0.0 0.0 0.3 0.0
+attack hailstoneL   hail.aoa hit_freeze.sc 9 0.8 800 0.0 0.0 0.3 25.0
+attack hailstoneR   hail.aoa hit_freeze.sc 9 0.8 800 0.0 0.0 0.3 335.0
+attack hailstoneLL  hail.aoa hit_freeze.sc 9 0.8 800 0.0 0.0 0.3 50.0
+attack hailstoneRR  hail.aoa hit_freeze.sc 9 0.8 800 0.0 0.0 0.3 310.0
+attack slide1 attack_s2.aoa hit_freeze.sc 11 0.8 250 0.0 -0.2 0.6 0.0
+attack slide2 attack_s2.aoa hit_freeze.sc 11 0.8 250 0.0 -0.2 0.6 0.0
+script frostnova.sc frostnova.sc
 script hailstone.sc hailstone.sc
+script iceslide.sc  iceslide.sc

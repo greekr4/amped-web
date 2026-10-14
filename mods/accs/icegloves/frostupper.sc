@@ -13,8 +13,6 @@
 	}
 350 : {
 		attack("frostup");
-		attack("frostside1");
-		attack("frostside2");
 	}
 590 : {
 		move(0,1);

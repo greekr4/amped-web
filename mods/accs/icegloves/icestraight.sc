@@ -20,8 +20,6 @@
 	}
 700 : {
 		attack("icewave");
-		attack("icewaveL");
-		attack("icewaveR");
 		startAnimation( 236.0 , 238.0 , 236.0 , 24 , 1) ;
 	}
 1000 : {
