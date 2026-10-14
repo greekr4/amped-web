@@ -1,3 +1,4 @@
+# Vercel CLI 배포용(.gitignore 대신 적용). web/game/ 은 여기서 제외하지 않아 로컬 에셋이 배포에 포함된다.
 /server/
 /.build/
 /.shots/

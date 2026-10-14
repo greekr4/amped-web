@@ -1,5 +1,10 @@
 {
  "outputDirectory": "web",
+ "git": {
+  "deploymentEnabled": {
+   "main": false
+  }
+ },
  "redirects": [
   {
    "source": "/game",

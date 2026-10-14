@@ -19,6 +19,7 @@ print(f"index.list: {len(dirs)} dirs")
 if out_json:
     cfg = {
         "outputDirectory": "web",
+        "git": {"deploymentEnabled": {"main": False}},
         "redirects": [{"source": p, "destination": p + "/", "permanent": True} for p in sorted(dirs)],
         "rewrites": [{"source": "/game/:path*/", "destination": "/game/:path*/index.list"}],
         # jar 와 악세 파일은 자주 바뀌므로 매번 ETag 재검증(304). 나머지 게임 리소스는 1시간 캐시.
