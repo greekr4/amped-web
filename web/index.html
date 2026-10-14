@@ -162,6 +162,7 @@ document.getElementById('accsClose').onclick = () => accsModal.classList.remove(
 accsModal.addEventListener('click', e => { if (e.target === accsModal) accsModal.classList.remove('open'); });
 window.addEventListener('keydown', e => { if (e.key === 'Escape' && accsModal.classList.contains('open')) accsModal.classList.remove('open'); });
 function pickAccs(id) { if (id) params.set('accs', id); else params.delete('accs'); location.search = params.toString(); }
+// 기술 목록은 스펙 파일(# tech 줄)에만 적고 카드에는 안 보인다. 어떤 입력에 뭐가 나가는지는 직접 찾아보는 재미로 남긴다.
 function accsCard(a) {
   const el = document.createElement('button'); el.className = 'accs' + (a.id === curAccs ? ' cur' : ''); el.type = 'button';
   const stats = Object.entries(a.stats || {}).map(([k, v]) => `<i class="${v > 0 ? 'up' : 'dn'}">${k} ${v > 0 ? '+' : ''}${v}</i>`).join('');

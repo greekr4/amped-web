@@ -1,21 +1,34 @@
 [
  {
+  "id": "dronecontroller",
+  "name": "드론 컨트롤러",
+  "summary": "등에 멘 드론 도킹 배낭과 양 손목의 조종 단말. 전기 드론을 날려 멀리서 상대를 감전시키는 데 강하고, 맞붙는 힘은 약하다.",
+  "detail": "능력치 합계 +2 (TEC 위주). 기술 교체: mods/accs/dronecontroller/poa.txt → resource/accs/dronecontroller.poa",
+  "stats": {
+   "STR": -1,
+   "TEC": 3,
+   "SPD": 1,
+   "DEF": -1
+  },
+  "techs": 9
+ },
+ {
   "id": "heavygloves",
   "name": "헤비 글러브",
-  "summary": "1.5배로 키운 묵직한 복싱 글러브. 서서 X는 메가 펀치, 대시 X는 글러브 미사일.",
-  "detail": "힘/방어는 오르고 속도/점프는 떨어진다. 서서 X는 메가 펀치, 대시 X는 글러브 미사일.",
+  "summary": "1.5배로 키운 묵직한 복싱 글러브. 느리지만 한 방이 무겁고, 조준 기술로 충격파를 날린다.",
+  "detail": "",
   "stats": {
    "STR": 3,
    "DEF": 1,
    "SPD": -2,
    "JMP": -1
   },
-  "techs": true
+  "techs": 8
  },
  {
   "id": "icegloves",
   "name": "얼음 장갑",
-  "summary": "양손 파란 글러브. 모든 공격이 얼음 기술로 바뀌고 어퍼·X 2타·Z+X+C 는 광역.",
+  "summary": "양손 파란 글러브. 맞은 상대가 잠시 얼어붙어 연속 공격에 강하고, 필살기는 주위를 통째로 얼린다.",
   "detail": "GitHub 이슈 #1 요청. 능력치 전부 +3.",
   "stats": {
    "STR": 3,
@@ -24,19 +37,19 @@
    "JMP": 3,
    "DEF": 3
   },
-  "techs": true
+  "techs": 12
  },
  {
   "id": "volcano",
   "name": "볼케이노 건틀릿",
-  "summary": "화염 글러브와 등의 대형 방패, 몸에 두른 오라. 모든 공격이 폭발·화염 기술로 바뀐다.",
-  "detail": "모든 공격(C/X/CC/CCC/XX/대시/조준Z+C,Z+X,Z+XC/점프 C,X)을 폭발·화염 기술로 교체한다.",
+  "summary": "화염 글러브와 등의 대형 방패, 몸을 두른 오라. 모든 주먹이 불을 뿜고 필살기는 폭발로 쓸어 낸다.",
+  "detail": "",
   "stats": {
    "STR": 4,
    "TEC": 1,
    "JMP": 1,
    "DEF": -2
   },
-  "techs": true
+  "techs": 12
  }
 ]
