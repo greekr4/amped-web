@@ -58,3 +58,8 @@
 #define turn 21
 #define unlockrecover 45
 #define visible 10009
+#define true 1
+#define false 0
+# 블렌드 상수(setBlendType 인자). 원본 fireshot.aoa/epee_denki.oa 바이트코드와 대조해 확인
+#define ADD 2
+#define BLEND 1

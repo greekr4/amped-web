@@ -18,6 +18,10 @@ import java.util.*;
  *        공격모델: poa resources 키(attack_s1.aoa) 또는 절대경로(/attack/hadou.aoa)
  *   script <이름.sc> <소스파일>      poa 내장 스크립트로 컴파일(defines.sc 헤더 자동)
  *   resource <키> <직렬화파일>      poa resources 에 객체 추가(.aoa 등)
+ *   aoa <키> <바탕 aoa 파일 또는 poa resources 키> [size=<판정 구 반지름>] [homing=<초당 유도 이동량>] [<스크립트명> <소스파일>]...
+ *        바탕 공격 모델(AttackData)을 복사해 판정 크기·내장 스크립트(attack.sc/end.sc)를 바꿔 resources 에 넣는다.
+ *        발사체의 착탄 폭발(end.sc 의 attackNow 반경·위력·이펙트)이나 크기(attack.sc 의 setSize)를 바꿀 때,
+ *        또는 근접 타격의 판정 반경을 키울 때(예: aoa attack_big.aoa attack_s2.aoa size=0.8) 쓴다. 원본 attack_s1/s2 는 0.2/0.3.
  */
 public class PoaTool {
     static final byte A = 1, B = 2, AB = 3;
@@ -90,6 +94,37 @@ public class PoaTool {
                 s.source = src;
                 s.prog = Scp.generate(defs + src);
                 d.scripts.put(t[1], s);
+            } else if (cmd.equals("aoa")) {
+                com.cyberstep.ring.data.AttackData ad;
+                File bf = new File(dir, t[2]);
+                if (bf.isFile()) {
+                    ObjectInputStream in = new ObjectInputStream(new FileInputStream(bf));
+                    ad = (com.cyberstep.ring.data.AttackData) in.readObject(); in.close();
+                } else {
+                    Object base = d.resources.get(t[2]);
+                    if (!(base instanceof com.cyberstep.ring.data.AttackData)) throw new IOException(spec + ":" + ln + " aoa 바탕을 찾을 수 없음: " + t[2]);
+                    // 직렬화 왕복으로 깊은 복사 (boundingboxies 공유 방지)
+                    ByteArrayOutputStream bo = new ByteArrayOutputStream(); ObjectOutputStream oo = new ObjectOutputStream(bo); oo.writeObject(base); oo.close();
+                    ad = (com.cyberstep.ring.data.AttackData) new ObjectInputStream(new ByteArrayInputStream(bo.toByteArray())).readObject();
+                }
+                int i = 3;
+                while (i < t.length && t[i].indexOf('=') > 0) {
+                    String k = t[i].substring(0, t[i].indexOf('=')), v = t[i].substring(t[i].indexOf('=') + 1); i++;
+                    if (k.equals("size")) {
+                        float sz = Float.parseFloat(v);
+                        for (Object b : ad.boundingboxies) ((com.cyberstep.ring.data.ObjectData.Box) b).size = sz;
+                        ad.environsize = sz;
+                    } else if (k.equals("homing")) {
+                        // 유도: 초당 이동량. game-overrides 의 AttackModel 이 "HOMING" 리소스를 보고 적을 추적한다
+                        if (ad.resources == null) ad.resources = new Hashtable();
+                        ad.resources.put("HOMING", Float.valueOf(v));
+                    } else throw new IOException(spec + ":" + ln + " aoa 옵션 모름: " + k);
+                }
+                for (; i + 1 < t.length; i += 2) {
+                    Script s = new Script(); s.source = read(new File(dir, t[i + 1])); s.prog = Scp.generate(defs + s.source);
+                    ad.scripts.put(t[i], s);
+                }
+                d.resources.put(t[1], ad);
             } else if (cmd.equals("resource")) {
                 ObjectInputStream in = new ObjectInputStream(new FileInputStream(new File(dir, t[2])));
                 d.resources.put(t[1], in.readObject()); in.close();
