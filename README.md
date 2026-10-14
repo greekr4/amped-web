@@ -77,7 +77,9 @@ Rust가 없으면 `node serve.mjs web 8777`.
 | **2. 이슈 요청** | [악세사리 요청 이슈](https://github.com/greekr4/amped-web/issues/new?template=accessory-request.yml)에 이름·외형·능력치·기술을 적으면 만들어서 배포 (자동화 예정) |
 | **3. PR** | 직접 만든 것을 [PR](https://github.com/greekr4/amped-web/compare)로 올리면 검토 후 머지·배포 (자동화 예정) |
 
-추가된 악세는 사이트 상단 **악세** 버튼의 모아보기에 올라갑니다. 목록(`web/accs.json`)은 빌드가 `mods/accs/*.txt`에서 자동으로 만들기 때문에 모아보기 등록은 따로 없습니다(게임 쪽 등록은 아래 만들기 4단계). 스펙 맨 윗줄 주석 `# 이름 — 한 줄 설명`이 카드에 그대로 보입니다.
+추가된 악세는 사이트 상단 **악세** 버튼의 모아보기에 올라갑니다. 목록(`web/accs.json`)은 빌드가 `mods/accs/*.txt`에서 자동으로 만들기 때문에 모아보기 등록은 따로 없습니다(게임 쪽 등록은 아래 만들기 4단계). 스펙 맨 윗줄 주석 `# 이름 — 한 줄 설명`이 카드에 그대로 보입니다. `# tech <입력> <기술 이름> — <설명>` 줄은 기록용이고 카드에는 나오지 않습니다. 어떤 입력에 무엇이 나가는지는 직접 찾아보는 재미로 남겨 둡니다.
+
+어느 입력에 어떤 성격의 기술을 넣고 어떻게 이름 붙일지는 [docs/accs-convention.md](docs/accs-convention.md)에 정리했습니다. 요약하면 **기본공격(C, X)은 원본에 가깝게, 점프 C는 그대로, 조준(Z+C, Z+X)에 악세의 개성, 필살기(Z+XC, 점프 XC, 대시 XC)는 상황별 고성능**입니다.
 
 ## 악세사리 만들기
 
@@ -93,7 +95,7 @@ Rust가 없으면 `node serve.mjs web 8777`.
 
 ### 방법 1: 에이전트에게 시키기
 
-Claude Code 같은 코딩 에이전트에게 이 저장소를 열어 주고 원하는 악세사리를 말로 설명하면 됩니다. 규칙과 포맷은 `docs/modding-rules.md`에 다 있어서 에이전트가 읽고 따라 합니다.
+Claude Code 같은 코딩 에이전트에게 이 저장소를 열어 주고 원하는 악세사리를 말로 설명하면 됩니다. 포맷은 `docs/modding-rules.md`, 슬롯 역할과 이름·설명 규칙은 `docs/accs-convention.md`에 다 있어서 에이전트가 읽고 따라 합니다.
 
 ```
 docs/modding-rules.md 를 읽고 "얼음 장갑" 악세사리를 만들어줘.
@@ -180,13 +182,14 @@ amped-web/
 ├─ tools/            # 복호화·코드 생성·텍스처·악세/poa 도구
 ├─ mods/accs/        # 악세사리 스펙과 스크립트 (예제 3종). 스펙 맨 위 주석이 모아보기 설명이 됨
 ├─ l10n/             # 번역표, 이미지 글자 재렌더 표
-├─ docs/             # 모딩 규칙(modding-rules.md), 카페 강좌 정리(modding-guide.md)
+├─ docs/             # 설계 규칙(accs-convention.md), 모딩 규칙(modding-rules.md), 카페 강좌 정리(modding-guide.md)
 ├─ server/           # 로컬용 Rust 정적 서버
 └─ build.sh
 ```
 
 ## 문서
 
+- [docs/accs-convention.md](docs/accs-convention.md) — 악세 설계 규칙: 입력 표기, 슬롯별 역할, 이름·설명 문장 규칙, 위력 가늠표
 - [docs/modding-rules.md](docs/modding-rules.md) — 악세·기술·스크립트 포맷, 명령어 표, 부위 번호, 디버그 방법
 - [docs/modding-guide.md](docs/modding-guide.md) — 싱겟마 카페 강좌 44편 요약 (팬 개조판 "패키지" 기준)
 
