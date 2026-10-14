@@ -6,3 +6,6 @@ node_modules/
 .vercel
 # 게임 에셋·jar: CyberStep 저작물이라 저장소에 넣지 않는다. 배포는 로컬에서 `vercel --prod` (.vercelignore 참고)
 web/game/
+# 로컬 전용 문서
+CLAUDE.md
+docs/LOCAL-BUILD.md
