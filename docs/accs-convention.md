@@ -113,7 +113,8 @@ attack meteor meteor.aoa hit_explode.sc 10 0.8 800 0.0 0.0 0.3 0.0
 - `end.sc`(착탄): `-1:` 블록에 `attackNow(0,0,0,1.5,18,"hit_explode.sc",-1,false)` + 효과음 + `checkMask(0)`, `0:` 블록에 이펙트와 `invisible()`, `800:` 에 `kill()`.
 - 바탕으로 쓸 수 있는 것: `hgrenade.aoa`(포물선), `bombshell.aoa`(포물선, 로켓 모델), `fireshot.aoa`/`iceshot.aoa`(직선), `biglaser.aoa`(가드 무시 레이저), `hadou.aoa`(직선 파동).
 - **적을 쫓아가는 발사체는 `homing=<초당 이동량>` 옵션으로 만든다**(예: `aoa drone.aoa ../../../web/game/resource/attack/bombshell.aoa homing=4.5 ...`). 원본 엔진에는 추적이 없다. aoa 의 `correctvec` 은 "발사 순간 조준 대상 쪽으로 방향 보정"일 뿐 날아가는 동안 꺾이지 않는다. 추적은 이 저장소가 `AttackModel` 을 오버라이드해 넣은 기능이고, 가장 가까운 살아 있는 적(NPC 포함)을 매 프레임 쫓는다. 속도 9 에 `attack` 의 `time` 1500 이 기준이다. 발사체는 `time` 이 끝나면 그 자리에서 터지므로 유도 발사체는 비행시간을 넉넉히(1200~1500ms) 주고 속도도 빠르게(8~10) 해야 목표에 닿는다. 4.5/800ms 로는 2~3 앞에서 터졌다.
-- `fireshot.aoa`/`iceshot.aoa` 는 모델이 없고 `attack.sc` 의 `setShape("fireball2.shp")` 가 그린다. `attack.sc` 를 바꿀 때 그 줄을 빼면 안 보인다. `bombshell.aoa` 는 모델이 있어 `setSize` 만 하면 된다.
+- `fireshot.aoa`/`iceshot.aoa` 는 모델이 없고 `attack.sc` 의 `setShape("fireball2.shp")` 가 그린다. `attack.sc` 를 바꿀 때 그 줄을 빼면 안 보인다. 원본 `attack.sc` 의 `650: kill()` 은 원본 비행시간(400ms)용이라 **비행시간을 늘렸으면 빼야** 몸체가 중간에 사라지지 않는다. `bombshell.aoa` 는 로켓 모델이 있어 `setSize` 만 하면 되는데 2.5 이상은 줘야 눈에 띈다.
+- 비행 중 꼬리: `attack.sc` 에 120ms 간격 시간 블록으로 `makeShapeModel("/effect/spark.oa",0,0,0,0,0,1)` 을 남기면 지나간 자리에 흔적이 찍혀 궤적이 보인다(파티클 없는 이펙트만).
 - 한 기술에서 여러 발을 쏠 때는 120~200ms 시간차를 둔다. 유도 발사체라도 한 점에 겹치지 않고 연달아 착탄한다.
 
 ## 10. 검증 체크리스트
