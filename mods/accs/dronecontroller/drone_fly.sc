@@ -1,41 +1,51 @@
 0 : {
-	setSize(2.6,2.6,2.6);
-	startAnimation(10,13,13,8,0);
+	setSize(2.2,2.2,2.2);
+	outline(false);
+	setShape("fireball2.shp");
+	setBlendType(ADD);
+	setColor(0.5,0.9,1.0,1);
+	startAnimation(0,9,0,30,1);
 	makeShapeModel("/effect/spark.oa",0,0,0,0,0,1);
 	}
-120 : {
-	makeShapeModel("/effect/spark.oa",0,0,0,0,0,1);
-	}
-240 : {
+100 : {
 	makeShapeModel("/effect/elec.oa",0,0,0,0,0,1);
 	}
-360 : {
+200 : {
 	makeShapeModel("/effect/spark.oa",0,0,0,0,0,1);
 	}
-480 : {
+300 : {
+	makeShapeModel("/effect/elec.oa",0,0,0,0,0,1);
+	}
+400 : {
+	makeShapeModel("/effect/spark.oa",0,0,0,0,0,1);
+	}
+500 : {
 	makeShapeModel("/effect/elec.oa",0,0,0,0,0,1);
 	}
 600 : {
 	makeShapeModel("/effect/spark.oa",0,0,0,0,0,1);
 	}
-720 : {
+700 : {
 	makeShapeModel("/effect/elec.oa",0,0,0,0,0,1);
 	}
-840 : {
+800 : {
 	makeShapeModel("/effect/spark.oa",0,0,0,0,0,1);
 	}
-960 : {
+900 : {
 	makeShapeModel("/effect/elec.oa",0,0,0,0,0,1);
 	}
-1080 : {
+1000 : {
 	makeShapeModel("/effect/spark.oa",0,0,0,0,0,1);
+	}
+1100 : {
+	makeShapeModel("/effect/elec.oa",0,0,0,0,0,1);
 	}
 1200 : {
-	makeShapeModel("/effect/elec.oa",0,0,0,0,0,1);
-	}
-1320 : {
 	makeShapeModel("/effect/spark.oa",0,0,0,0,0,1);
 	}
-1440 : {
+1300 : {
 	makeShapeModel("/effect/elec.oa",0,0,0,0,0,1);
+	}
+1400 : {
+	makeShapeModel("/effect/spark.oa",0,0,0,0,0,1);
 	}

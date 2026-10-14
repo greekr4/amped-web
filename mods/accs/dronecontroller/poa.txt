@@ -25,13 +25,13 @@ script dronedropkick.sc dronedropkick.sc
 
 # ---- 전용 발사체(전부 유도: correctvec=true 바탕만 사용) ----
 # drone.aoa: 포탄(bombshell, 포물선 유도·roketto 모델) 바탕. 크기 1.6배, 착탄 반경 1.0·위력 10 전기 폭발
-aoa drone.aoa ../../../web/game/resource/attack/bombshell.aoa homing=9 attack.sc drone_fly.sc end.sc drone_end.sc
+aoa drone.aoa ../../../web/game/resource/attack/fireshot.aoa homing=9 attack.sc drone_fly.sc end.sc drone_end.sc
 # dronedart.aoa: 화염탄(fireshot, 직선 유도·correctvert) 바탕. 소형 정찰 드론, 착탄 반경 0.9·위력 10
 aoa dronedart.aoa ../../../web/game/resource/attack/fireshot.aoa homing=9 attack.sc dart_fly.sc end.sc dart_end.sc
 # dronesalvo.aoa: 필살기용 포탄. 크기 1.8배, 착탄 반경 1.3·위력 12
-aoa dronesalvo.aoa ../../../web/game/resource/attack/bombshell.aoa homing=9 attack.sc salvo_fly.sc end.sc salvo_end.sc
+aoa dronesalvo.aoa ../../../web/game/resource/attack/fireshot.aoa homing=9 attack.sc salvo_fly.sc end.sc salvo_end.sc
 # dronedrop.aoa: 점프 필살기용 포탄. 크기 2.0배, 착탄 반경 1.3·위력 14
-aoa dronedrop.aoa ../../../web/game/resource/attack/bombshell.aoa homing=9 attack.sc drop_fly.sc end.sc drop_end.sc
+aoa dronedrop.aoa ../../../web/game/resource/attack/fireshot.aoa homing=9 attack.sc drop_fly.sc end.sc drop_end.sc
 
 # ---- 조준 Z+C 드론 출격(직선 유도 1기) / Z+X 드론 더블 출격(포물선 유도 2기, 시간차) ----
 tech A_s A A dronelaunch.sc
