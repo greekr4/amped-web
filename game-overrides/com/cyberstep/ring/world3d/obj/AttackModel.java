@@ -327,6 +327,7 @@ ScriptEngineVariable {
     }
 
     public void crash(Vector3D vector3D, Vector3D vector3D2, Body3D body3D) {
+        if (DEBUG && this.homingSpeed > 0.0f) System.err.println("[homing] hit " + body3D.getName() + " hp=" + body3D.HP);
         int n = body3D.HP;
         if (body3D.attack(this.parent, this.power, this.effect, vector3D2, this.ignoreguard)) {
             this.notifyMakeEffect(this.effecttype, vector3D, vector3D2);
@@ -335,6 +336,7 @@ ScriptEngineVariable {
     }
 
     public boolean end(Vector3D vector3D) {
+        if (DEBUG && this.homingSpeed > 0.0f) System.err.println("[homing] timeout dist=" + (this.homingTarget == null ? -1.0f : Vector3D.velocity(this.location, this.homingTarget.location).length()));
         this.status = 2;
         this.rotation.set(BasicModel.aimQuaternion(vector3D));
         this.updateMatrix();
@@ -347,6 +349,7 @@ ScriptEngineVariable {
     }
 
     public boolean end(Vector3D vector3D, Vector3D vector3D2, float f) {
+        if (DEBUG && this.homingSpeed > 0.0f) System.err.println("[homing] end(collide) dist=" + (this.homingTarget == null ? -1.0f : Vector3D.velocity(this.location, this.homingTarget.location).length()));
         if (f > 0.0f) {
             Vector3D vector3D3 = this.reflect(vector3D.scale(1.0f / f), vector3D2);
         } else {

@@ -45,7 +45,7 @@
 - **`dhit_*.sc` 는 피격이 아니라 사망 연출이다**(`dhit_freeze` = 얼린 뒤 `explode`+`die()`, `dhit_explode`/`dhit_burn` 도 같음). 타격의 `effect` 로 쓰면 위력과 무관하게 즉사한다. 보통 타격엔 `hit_*.sc` 만 쓴다. `[#15]`
 - `hit_freeze.sc` 는 피격자에게 `ignoreAttack(2500)` 을 걸어 그 뒤 2.5초간 추가 타격이 들어가지 않는다. 다단 히트 기술에 빙결을 쓰면 첫 타만 들어간다(의도된 밸런스).
 - 이펙트를 한 번에 많이 띄우지 말 것. `explode1/2.oa` 는 안에서 파티클(`p1.ptc`·`afterburn.ptc`)을 또 만든다. 발사체 5개 × 폭발 5개처럼 쌓이면 `GLEngine.display()` 에서 `ArrayIndexOutOfBoundsException` 이 수 초간 반복된다(렌더 버퍼 한계). 착탄 하나당 파티클 있는 이펙트는 1개, 나머지는 `crash`·`honoo`·`cold1` 같은 가벼운 것으로. `[#16]`
-- **발사체 유도는 엔진에 없다. `game-overrides/.../world3d/obj/AttackModel.java` 가 넣은 기능이다.** aoa 의 `correctvec` 은 `Player.attack` 에서 발사 순간 조준 대상 쪽으로 초기 방향만 보정하고, 비행 중엔 `basem`(발사 시 행렬) 기준 고정 궤적(`getMotion(f)`)을 따른다. 오버라이드는 AttackData `resources` 의 `HOMING`(Float, 초당 이동량)을 보고 매 프레임 가장 가까운 살아 있는 적 쪽으로 누적 보정량(`homingOff`)을 더한다. poa 스펙 `aoa ... homing=4.5`. `world.getPlayerModels()` 는 사람 플레이어만 돌려주므로(적 NPC 제외) `getAllModels()` 에서 `Player`(NPC 는 Player 의 하위) 를 골라야 한다. 디버그면 `[homing] target=...` 로그. `[#20]`
+- **발사체 유도는 엔진에 없다. `game-overrides/.../world3d/obj/AttackModel.java` 가 넣은 기능이다.** aoa 의 `correctvec` 은 `Player.attack` 에서 발사 순간 조준 대상 쪽으로 초기 방향만 보정하고, 비행 중엔 `basem`(발사 시 행렬) 기준 고정 궤적(`getMotion(f)`)을 따른다. 오버라이드는 AttackData `resources` 의 `HOMING`(Float, 초당 이동량)을 보고 매 프레임 가장 가까운 살아 있는 적 쪽으로 누적 보정량(`homingOff`)을 더한다. poa 스펙 `aoa ... homing=9` + `attack` 의 `time` 1500(비행시간이 끝나면 그 자리에서 터지므로 넉넉히). `world.getPlayerModels()` 는 사람 플레이어만 돌려주므로(적 NPC 제외) `getAllModels()` 에서 `Player`(NPC 는 Player 의 하위) 를 골라야 한다. 디버그면 `[homing] target=...` 로그. `[#20]`
 - **공중에서 떨어져 착지할 때 뭔가 하려면 시간으로 맞추지 말고 `landScript("x.sc")` 를 쓴다.** 점프 높이·지형에 따라 착지 시각이 달라져 시간 블록의 타격은 빗나간다. `landScript` 로 등록한 스크립트가 착지 순간 실행되고(원본 `hit_B5.sc` 의 `landScript("down.sc")` 와 같은 방식), 그 안에서 이펙트·타격·`recover()` 를 한다. 스크립트는 poa `script` 항목으로 같이 넣는다. `[#17]`
 - **기술 스크립트 중 다른 기술 입력을 막으려면 `bind(ms)`.** 피격 스크립트가 쓰는 그 명령이다. 스크립트가 `jump()` 로 공중에 뜨면 상태가 F 가 되어 `J_x` 같은 공중 기술이 겹쳐 발동했는데, 첫 블록에 `bind(총 길이)` 를 넣으면 기술 조회 자체가 안 일어난다(`[tech]` 로그가 안 찍힘). `[#18]`
 - 근접 타격의 판정 반경은 공격 모델의 `boundingboxies[].size`(`attack_s1` 0.2, `attack_s2/s3` 0.3). poa `aoa <키> attack_s2.aoa size=0.9` 로 키운 사본을 만들어 `attack` 모델로 쓴다.
@@ -142,7 +142,7 @@
 
 외형: 등(13) `rucksack3.prm` ×1.15(드론 도킹 배낭) + 양 손목(6/12) `magajinporch2.prm` ×0.9(조종 단말). 스탯 STR-1 TEC+3 SPD+1 DEF-1(합계 +2). 조준·필살기 5슬롯은 **전부 자동 추적 드론**(`homing=` 발사체, #20)을 내보내고, 차이는 드론 수·궤적·크기·위력으로 낸다. 피격은 `hit_shock.sc`(감전, 피격자 `ignoreAttack(1800)`), 소리는 `/sound/3.sr`.
 
-전용 발사체(전부 `homing=4.5` 로 추적. `correctvec` 은 발사 시 조준 보정일 뿐이라 추적과 무관):
+전용 발사체(전부 `homing=9`, `time 1500` 으로 추적. `correctvec` 은 발사 시 조준 보정일 뿐이라 추적과 무관):
 
 | 키 | 바탕 | 비행(attack.sc) | 착탄(end.sc) |
 |---|---|---|---|
