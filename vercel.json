@@ -980,6 +980,15 @@
  ],
  "headers": [
   {
+   "source": "/game/(.*)",
+   "headers": [
+    {
+     "key": "Cache-Control",
+     "value": "public, max-age=3600"
+    }
+   ]
+  },
+  {
    "source": "/game/(amped|patch)\\.jar",
    "headers": [
     {
@@ -994,15 +1003,6 @@
     {
      "key": "Cache-Control",
      "value": "public, max-age=0, must-revalidate"
-    }
-   ]
-  },
-  {
-   "source": "/game/(.*)",
-   "headers": [
-    {
-     "key": "Cache-Control",
-     "value": "public, max-age=3600"
     }
    ]
   }
