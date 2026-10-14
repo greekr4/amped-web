@@ -21,7 +21,12 @@ if out_json:
         "outputDirectory": "web",
         "redirects": [{"source": p, "destination": p + "/", "permanent": True} for p in sorted(dirs)],
         "rewrites": [{"source": "/game/:path*/", "destination": "/game/:path*/index.list"}],
-        "headers": [{"source": "/game/(.*)", "headers": [{"key": "Cache-Control", "value": "public, max-age=3600"}]}],
+        # jar 와 악세 파일은 자주 바뀌므로 매번 ETag 재검증(304). 나머지 게임 리소스는 1시간 캐시.
+        "headers": [
+            {"source": "/game/(amped|patch)\\.jar", "headers": [{"key": "Cache-Control", "value": "public, max-age=0, must-revalidate"}]},
+            {"source": "/game/resource/accs/(.*)", "headers": [{"key": "Cache-Control", "value": "public, max-age=0, must-revalidate"}]},
+            {"source": "/game/(.*)", "headers": [{"key": "Cache-Control", "value": "public, max-age=3600"}]},
+        ],
     }
     with open(out_json, "w") as f:
         json.dump(cfg, f, ensure_ascii=False, indent=1)
